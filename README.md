@@ -1,7 +1,7 @@
 # KAFA MANAGEMENT SYSTEM
 ONLINE KAFA MANAGEMENT SYSTEM FOR USAGE OF KAFA SCHOOL
 
-## INSTALLATION
+## Installation
 
 To clone this project
 ```bash
