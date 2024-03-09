@@ -39,7 +39,7 @@ To setup and publish this project
 Developed and Deployed using Visual Studio Code, Laragon, Heidi SQL, Github.
 
 ## Programmer's
-- [@Afiqa](https://github.com/Apikmmar)
+- [@Afiq](https://github.com/Apikmmar)
 - [@Adriana](https://github.com/adrianaafandi)
 - [@Farisha](https://github.com/tgfarisha)
 - [@Warseena](https://github.com/warsena)
