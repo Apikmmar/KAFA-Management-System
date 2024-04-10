@@ -10,6 +10,7 @@
     <title>Kafa Management System</title>
 </head>
 <body class="body">
+    @include('component.navbar')
 
     @yield('content')
 
