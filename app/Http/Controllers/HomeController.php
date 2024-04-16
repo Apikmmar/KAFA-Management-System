@@ -26,6 +26,6 @@ class HomeController extends Controller
     {
         $user = Auth::user();
 
-        return view('testraya', compact('user'));
+        return view('ManageAccount.home', compact('user'));
     }
 }
