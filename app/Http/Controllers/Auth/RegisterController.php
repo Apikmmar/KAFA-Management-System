@@ -70,7 +70,7 @@ class RegisterController extends Controller
         $contact = (int) $data['contact'];
 
         $user = User::create([
-            'role_id' => 1,
+            'role_id' => 3,
             'user_name' => $data['name'],
             'user_ic' => $data['icnumber'],
             'email' => $data['email'],

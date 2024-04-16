@@ -10,9 +10,20 @@
     font-family: Arial, Helvetica, sans-serif;
     color: rgb(0, 0, 0);
 }
+.navbarstyle-1 {
+    background-image: linear-gradient(to right, rgb(255, 255, 255), rgba(231, 53, 64, 1));
+}
 
-.navbarstyle {
+.navbarstyle-2 {
     background-image: linear-gradient(to right, rgb(255, 255, 255), rgb(117, 168, 255));
+}
+
+.navbarstyle-3 {
+    background-image: linear-gradient(to right, rgb(255, 255, 255), rgba(238, 205, 85, 1));
+}
+
+.navbarstyle-4 {
+    background-image: linear-gradient(to right, rgb(255, 255, 255), rgba(67, 192, 170, 1));
 }
 
 .sidebar {

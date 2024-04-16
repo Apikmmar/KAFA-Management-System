@@ -17,7 +17,7 @@ class Classroom extends Model
     ];
 
     public function teacher() {
-        return $this->hasOne(User::class, 'teacher_id'. 'id');
+        return $this->hasOne(User::class, 'id', 'teacher_id');
     }
     
     public function students() {
