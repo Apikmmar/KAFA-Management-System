@@ -18,4 +18,12 @@ class Student extends Model
         'student_gender',
         'student_verification',
     ];
+
+    public function student() {
+        return $this->hasOne(Classroom::class);
+    }
+
+    public function parent() {
+        return $this->belongsTo(User::class, 'parent_id', 'id');
+    }
 }

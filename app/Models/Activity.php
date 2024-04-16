@@ -18,4 +18,8 @@ class Activity extends Model
         'activity_date',
         'activity_remarks',
     ];
+
+    public function classroom() {
+        return $this->belongsTo(Classroom::class);
+    }
 }
