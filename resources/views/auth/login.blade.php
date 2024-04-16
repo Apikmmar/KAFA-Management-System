@@ -13,12 +13,12 @@
                 @csrf
 
                 <div class="row mb-3">
-                    <label for="ic_number" class="col-md-4 col-form-label text-md-end">{{ __('Identity Card Number') }}</label>
+                    <label for="user_ic" class="col-md-4 col-form-label text-md-end">{{ __('Identity Card Number') }}</label>
 
                     <div class="col-md-6">
-                        <input id="ic_number" type="text" class="form-control @error('ic_number') is-invalid @enderror" name="ic_number" value="{{ old('ic_number') }}" required autocomplete="ic_number" autofocus>
+                        <input id="user_ic" type="text" class="form-control @error('user_ic') is-invalid @enderror" name="user_ic" value="{{ old('user_ic') }}" required autocomplete="user_ic" autofocus>
 
-                        @error('ic_number')
+                        @error('user_ic')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('role_id'); // role id for user registered in the system
             $table->string('user_name'); // user name
-            $table->unsignedBigInteger('user_ic')->unique()->digits(12); // user ic only contain 12 digit
+            $table->string('user_ic', 12)->unique(); // user ic only contain 12 digit
             $table->string('email')->unique(); // user email
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password'); // user password
