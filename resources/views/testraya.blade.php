@@ -1,4 +1,4 @@
-@extends('component.master')
+@extends('layouts.master')
 
 @section('content')
     <div class="text-start">

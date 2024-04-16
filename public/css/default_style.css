@@ -1,3 +1,9 @@
+@import url(style_manageaccount.css);
+@import url(style_manageschedule.css);
+@import url(style_manageresult.css);
+@import url(style_managereport.css);
+@import url(style_managebuletin.css);
+
 .body {
     background-color: rgb(245, 245, 245);
     overflow-y: auto;

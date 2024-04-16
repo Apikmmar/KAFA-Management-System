@@ -49,9 +49,13 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
+            'icnumber' => ['required', 'string', 'size:12'],
             'name' => ['required', 'string', 'max:255'],
+            'gender' => ['required', 'string', 'max:255', 'in:Men,Women'],
+            'contact' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'ic_docs' => ['required', 'pdf', 'max:10240'],
         ]);
     }
 
@@ -63,10 +67,26 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
+        $contact = (int) $data['contact'];
+
+        $user = User::create([
+            'role_id' => 1,
+            'user_name' => $data['name'],
+            'user_ic' => $data['icnumber'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'user_gender' => $data['gender'],
+            'user_contact' => $contact,
+            'user_verification' => isset($path) ? $path : 'path',
         ]);
+
+        if (request()->hasFile('ic_docs')) {
+            $file = request()->file('ic_docs');
+            $path = $file->store('Parent Verification', 'public');
+            $user->user_verification = $path;
+            $user->save();
+        }
+
+        return $user;
     }
 }

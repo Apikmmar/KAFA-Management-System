@@ -10,8 +10,8 @@
     <title>Kafa Management System</title>
 </head>
 <body class="body">
-    @include('component.sidebar')
-    @include('component.navbar')
+    @include('layouts.sidebar')
+    @include('layouts.navbar')
 
     <div class="content-color">
         <div class="container">
