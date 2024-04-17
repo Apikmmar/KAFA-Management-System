@@ -22,7 +22,9 @@ Route::get('/', function () {
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 Route::get('/profile', [AccountController::class, 'profile'])->name('profile');
+Route::put('/profile/{id}', [AccountController::class, 'updateProfile'])->name('profile.update');
 
 Route::group(['middleware' => 'role:1'], function () {
     

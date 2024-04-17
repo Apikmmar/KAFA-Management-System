@@ -82,7 +82,8 @@ class RegisterController extends Controller
 
         if (request()->hasFile('ic_docs')) {
             $file = request()->file('ic_docs');
-            $path = $file->store('Parent Verification', 'public');
+            $fileName = $file->getClientOriginalName();
+            $path = $file->storeAs('Parent Verification', $fileName, 'public');
             $user->user_verification = $path;
             $user->save();
         }
