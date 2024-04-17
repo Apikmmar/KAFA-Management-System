@@ -34,7 +34,7 @@
                 {{ $userRole->user_name }}
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Profile</a></li>
+                <li><a class="dropdown-item" href="/profile">Profile</a></li>
                 <li>
                     <a class="dropdown-item" href="{{ route('logout') }}" 
                         onclick="event.preventDefault();

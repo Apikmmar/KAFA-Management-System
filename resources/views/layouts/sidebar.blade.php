@@ -24,7 +24,7 @@
 
             {{-- USE BY ALL USER --}}
             <a href="/home" class="list-group-item btn {{ $btncolor }} btn-lg">Home</a>
-            <a href="#" class="list-group-item btn {{ $btncolor }} btn-lg">Profile</a>
+            <a href="/profile" class="list-group-item btn {{ $btncolor }} btn-lg">Profile</a>
 
             @if ($isMUIPAdmin)
                 {{-- MUIP Admin --}}
