@@ -11,7 +11,7 @@ class AddTeacherRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,13 @@ class AddTeacherRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'user_ic' => 'required|string|size:12',
+            'user_name' => 'required|string|max:255',
+            'user_gender' => 'required|string|in:Men,Women|max:255',
+            'user_contact' => 'required|numeric|digits_between:1,255',
+            'email' => 'required|string|email|max:255|unique:users,email,'.$this->user()->id,
+            'password' =>  'required|string|min:8',
+            'user_verification' => 'required|mimes:pdf|max:10240',
         ];
     }
 }

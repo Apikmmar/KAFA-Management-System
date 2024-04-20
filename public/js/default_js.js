@@ -7,7 +7,7 @@ $(document).ready(function() {
 
     $("#flexCheckChecked").change(function() {
         var passwordInput = $('input[name="password"]');
-        var icInput = $('input[name="icnumber"], input[name="icnumber"]');
+        var icInput = $('input[name="user_ic"], input[name="user_ic"]');
         
         if ($(this).is(":checked")) {
             passwordInput.val(icInput.val());

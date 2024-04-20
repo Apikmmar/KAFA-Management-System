@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddTeacherRequest;
 use App\Http\Requests\UpdateProfileRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -55,7 +56,28 @@ class AccountController extends Controller
         return view('ManageAccount.registerteacher');
     }
 
-    public function createteacher() {
+    public function createteacher(AddTeacherRequest $request) {
+
+        $data = $request->validated();
+
+        $user = User::create([
+            'role_id' => 4,
+            'user_name' => $data['user_name'],
+            'user_ic' => $data['user_ic'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+            'user_gender' => $data['gender'],
+            'user_contact' => $data['user_contact'],
+            'user_verification' => isset($path) ? $path : 'path',
+        ]);
+
+        if (request()->hasFile('user_verification')) {
+                $file = request()->file('user_verification');
+                $fileName = $file->getClientOriginalName();
+                $path = $file->storeAs('Parent Verification', $fileName, 'public');
+                $user->user_verification = $path;
+                $user->save();
+            }
 
         return redirect()->route('registerteacher')->with('message', 'Successfully Update Profile');
     }

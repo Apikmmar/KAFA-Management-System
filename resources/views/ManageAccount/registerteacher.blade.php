@@ -5,16 +5,16 @@
     <div class="row justify-content-center mt-3 mb-3">
         <div class="col-md-8">
             <div>
-                <form method="POST" action="" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('registerteacher.create') }}" enctype="multipart/form-data">
                     @csrf
 
                     <div class="row mb-3">
-                        <label for="icnumber" class="col-md-4 col-form-label text-md-end">{{ __('Identity Card Number') }}</label>
+                        <label for="user_ic" class="col-md-4 col-form-label text-md-end">{{ __('Identity Card Number') }}</label>
 
                         <div class="col-md-6">
-                            <input id="icnumber" type="text" class="form-control @error('icnumber') is-invalid @enderror" name="icnumber" value="{{ old('icnumber') }}" required autocomplete="icnumber" autofocus>
+                            <input id="user_ic" type="text" class="form-control @error('user_ic') is-invalid @enderror" name="user_ic" value="{{ old('user_ic') }}" required autocomplete="user_ic" autofocus>
 
-                            @error('icnumber')
+                            @error('user_ic')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -23,12 +23,12 @@
                     </div>
 
                     <div class="row mb-3">
-                        <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Full Name') }}</label>
+                        <label for="user_name" class="col-md-4 col-form-label text-md-end">{{ __('Full Name') }}</label>
 
                         <div class="col-md-6">
-                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name">
+                            <input id="user_name" type="text" class="form-control @error('user_name') is-invalid @enderror" name="user_name" value="{{ old('user_name') }}" required autocomplete="user_name">
 
-                            @error('name')
+                            @error('user_name')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -55,12 +55,12 @@
                     </div>                        
 
                     <div class="row mb-3">
-                        <label for="contact" class="col-md-4 col-form-label text-md-end">{{ __('Contact') }}</label>
+                        <label for="user_contact" class="col-md-4 col-form-label text-md-end">{{ __('Contact') }}</label>
 
                         <div class="col-md-6">
-                            <input id="contact" type="text" class="form-control @error('contact') is-invalid @enderror" name="contact" value="{{ old('contact') }}" required autocomplete="contact">
+                            <input id="user_contact" type="text" class="form-control @error('user_contact') is-invalid @enderror" name="user_contact" value="{{ old('user_contact') }}" required autocomplete="user_contact">
 
-                            @error('contact')
+                            @error('user_contact')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -103,10 +103,10 @@
                     </div>
 
                     <div class="row mb-3 mt-2">
-                        <label for="ic_docs" class="col-md-4 col-form-label text-md-end">{{ __('Upload Identity Card') }}</label>
+                        <label for="user_verification" class="col-md-4 col-form-label text-md-end">{{ __('Upload Identity Card') }}</label>
                         <div class="col-md-6">
-                            <input id="ic_docs" type="file" class="form-control @error('ic_docs') is-invalid @enderror" name="ic_docs" required>
-                            @error('ic_docs')
+                            <input id="user_verification" type="file" class="form-control @error('user_verification') is-invalid @enderror" name="user_verification" required>
+                            @error('user_verification')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>

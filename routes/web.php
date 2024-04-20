@@ -27,11 +27,12 @@ Route::get('/profile', [AccountController::class, 'profile'])->name('profile');
 Route::put('/profile/{id}', [AccountController::class, 'updateProfile'])->name('profile.update');
 
 Route::group(['middleware' => 'role:1'], function () {
-    
+
 });
 
 Route::group(['middleware' => 'role:2'], function () {
     Route::get('/registerteacher', [AccountController::class, 'registerteacher'])->name('registerteacher');
+    Route::post('/registerteacher', [AccountController::class, 'createteacher'])->name('registerteacher.create');
 });
 
 Route::group(['middleware' => 'role:3'], function () {
