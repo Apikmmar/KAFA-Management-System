@@ -49,4 +49,14 @@ class AccountController extends Controller
     
         return redirect()->route('profile')->with('message', 'Successfully Update Profile');
     }
+
+    public function registerteacher() {
+
+        return view('ManageAccount.registerteacher');
+    }
+
+    public function createteacher() {
+
+        return redirect()->route('registerteacher')->with('message', 'Successfully Update Profile');
+    }
 }
