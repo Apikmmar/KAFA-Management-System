@@ -118,7 +118,12 @@
                             <label for="new_password" class="col-md-4 col-form-label text-md-end">{{ __('New Password') }}</label>
 
                             <div class="col-md-4">
-                                <input id="new_password" type="password" class="form-control" name="new_password" placeholder="New Password">
+                                <input id="new_password" type="password" class="form-control @error('new_password') is-invalid @enderror" name="new_password" placeholder="New Password">
+                                @error('new_password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -128,7 +133,12 @@
                             <label for="confirm_password" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
                             
                             <div class="col-md-4">
-                                <input id="confirm_password" type="password" class="form-control" name="confirm_password" placeholder="Confirm Password">
+                                <input id="confirm_password" type="password" class="form-control @error('confirm_password') is-invalid @enderror" name="confirm_password" placeholder="Confirm Password">
+                                @error('confirm_password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                         </div>
                     </div>

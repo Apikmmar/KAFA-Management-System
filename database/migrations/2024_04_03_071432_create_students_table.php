@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->id();
             $table->foreignId('classroom_id')->nullable(); // classroom id of student class
-            $table->foreignId('parent_id')->nullable(); // user id of parent tht register their child
+            $table->foreignId('parent_id'); // user id of parent tht register their child
             $table->string('student_name'); //student name
-            $table->unsignedBigInteger('student_ic')->unique()->digits(12); //student ic only contain 12 digit
+            $table->string('student_ic', 12); //student ic only contain 12 digit
             $table->integer('student_age'); // student age
             $table->string('student_gender'); // student gender
             $table->string('student_verification'); // student verification path

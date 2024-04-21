@@ -28,8 +28,8 @@ class UpdateProfileRequest extends FormRequest
             'user_contact' => 'required|numeric|digits_between:1,255',
             'email' => 'required|string|email|max:255|unique:users,email,'.$this->user()->id,
             'user_verification' => 'nullable|mimes:pdf|max:10240',
-            'new_password' =>  'nullable|string|min:8|confirmed',
-            'confirm_password' => 'nullable|string|min:8',
+            'new_password' =>  'nullable|string|min:8',
+            'confirm_password' => 'nullable|string|min:8|same:new_password',
         ];
     }
 }

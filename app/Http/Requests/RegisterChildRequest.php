@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AddTeacherRequest extends FormRequest
+class RegisterChildRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,13 +22,11 @@ class AddTeacherRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_ic' => 'required|string|size:12',
-            'user_name' => 'required|string|max:255',
-            'user_gender' => 'required|string|in:Men,Women|max:255',
-            'user_contact' => 'required|numeric|digits_between:1,255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' =>  'required|string|min:8',
-            'user_verification' => 'required|mimes:pdf|max:10240',
+            'child_ic' => 'required|string|size:12',
+            'child_name' => 'required|string|max:255',
+            'child_age' => 'required|numeric|digits_between:1,255',
+            'child_gender' => 'required|string|in:Men,Women!max:255',
+            'child_verification' => 'required|mimes:pdf|max:10240',
         ];
     }
 }

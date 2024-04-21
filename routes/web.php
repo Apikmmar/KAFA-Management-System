@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -36,7 +37,8 @@ Route::group(['middleware' => 'role:2'], function () {
 });
 
 Route::group(['middleware' => 'role:3'], function () {
-    
+    Route::get('/registerchild', [AccountController::class, 'registerchild'])->name('registerchild');
+    Route::post('/registerchild', [AccountController::class, 'createchild'])->name('registerchild.create');
 });
 
 Route::group(['middleware' => 'role:4'], function () {
