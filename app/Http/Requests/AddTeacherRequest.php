@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateProfileRequest extends FormRequest
+class AddTeacherRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,10 +26,9 @@ class UpdateProfileRequest extends FormRequest
             'user_name' => 'required|string|max:255',
             'user_gender' => 'required|string|in:Men,Women|max:255',
             'user_contact' => 'required|numeric|digits_between:1,255',
-            'email' => 'required|string|email|max:255|unique:users,email,'.$this->user()->id,
-            'user_verification' => 'nullable|mimes:pdf|max:10240',
-            'new_password' =>  'nullable|string|min:8',
-            'confirm_password' => 'nullable|string|min:8|same:new_password',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' =>  'required|string|min:8',
+            'user_verification' => 'required|mimes:pdf|max:10240',
         ];
     }
 }
