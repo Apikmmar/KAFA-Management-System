@@ -76,7 +76,7 @@ class AccountController extends Controller
         if (request()->hasFile('user_verification')) {
             $file = request()->file('user_verification');
             $fileName = $file->getClientOriginalName();
-            $path = $file->storeAs('Parent Verification', $fileName, 'public');
+            $path = $file->storeAs('Teacher Verification', $fileName, 'public');
             $user->user_verification = $path;
             $user->save();
         }
