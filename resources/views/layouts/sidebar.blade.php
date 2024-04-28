@@ -34,7 +34,7 @@
             @elseif($isKAFAAdmin)
                 {{-- KAFA Admin --}}
                 <a href="/registerteacher" class="list-group-item btn {{ $btncolor }} btn-lg">Add Teacher</a>
-                <a href="#" class="list-group-item btn {{ $btncolor }} btn-lg">All Class</a>
+                <a href="/all_class" class="list-group-item btn {{ $btncolor }} btn-lg">All Class</a>
                 <a href="#" class="list-group-item btn {{ $btncolor }} btn-lg">Report</a>
                 <a href="#" class="list-group-item btn {{ $btncolor }} btn-lg">Notice</a>
                 <a href="#" class="list-group-item btn {{ $btncolor }} btn-lg">Result</a>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\ScheduleController;
 use App\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +37,10 @@ Route::group(['middleware' => 'role:1'], function () {
 Route::group(['middleware' => 'role:2'], function () {
     Route::get('/registerteacher', [AccountController::class, 'registerteacher'])->name('registerteacher');
     Route::post('/registerteacher', [AccountController::class, 'createteacher'])->name('registerteacher.create');
+
+    Route::get('/all_class', [ScheduleController::class, 'allclass'])->name('allclass');
+    Route::get('/add_classroom', [ScheduleController::class, 'addclassroom'])->name('addclassroom');
+    Route::get('/view_classroom', [ScheduleController::class, 'viewclassroom'])->name('viewclassroom');
 });
 
 Route::group(['middleware' => 'role:3'], function () {
