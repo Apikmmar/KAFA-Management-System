@@ -30,7 +30,7 @@
                     <td>{!! optional($class->teacher)->user_name ?? '<i>Not Set Up</i>' !!}</td>
                     <td>{{ $class->class_description }}</td>
                     <td>
-                        <a href="/view_classroom" class="btn btn-sm btn-info fw-bold text-white">View</a>
+                        <a href="{{ route('viewclassroom', ['id' => $class->id]) }}" class="btn btn-sm btn-info fw-bold text-white">View</a>
                     </td>
                     </tr>
                     @php

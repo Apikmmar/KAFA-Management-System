@@ -40,7 +40,8 @@ Route::group(['middleware' => 'role:2'], function () {
 
     Route::get('/all_class', [ScheduleController::class, 'allclass'])->name('allclass');
     Route::get('/add_classroom', [ScheduleController::class, 'addclassroom'])->name('addclassroom');
-    Route::get('/view_classroom', [ScheduleController::class, 'viewclassroom'])->name('viewclassroom');
+    Route::post('/add_classroom', [ScheduleController::class, 'createClassroom'])->name('addclassroom.create');
+    Route::get('/view_classroom/{id}', [ScheduleController::class, 'viewclassroom'])->name('viewclassroom');
 });
 
 Route::group(['middleware' => 'role:3'], function () {
