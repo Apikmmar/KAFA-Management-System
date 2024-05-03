@@ -2,8 +2,6 @@
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ScheduleController;
-use App\Models\Role;
-use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -53,5 +51,8 @@ Route::group(['middleware' => 'role:3'], function () {
 Route::group(['middleware' => 'role:4'], function () {
     Route::get('/class_activity', [ScheduleController::class, 'classactivity'])->name('classactivity');
     Route::get('/new_activity', [ScheduleController::class, 'newactivity'])->name('newactivity');
+    Route::post('/new_activity', [ScheduleController::class, 'createclassactivity'])->name('newactivity.create');
     Route::get('/activity_details/{id}', [ScheduleController::class, 'activitydetails'])->name('activitydetails');
+    Route::put('/activity_details/{id}', [ScheduleController::class, 'updateclassactivity'])->name('activitydetails.update');
+    Route::delete('/activity_details/{id}', [ScheduleController::class, 'deleteclassactivity'])->name('activitydetails.delete');
 });

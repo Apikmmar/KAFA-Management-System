@@ -21,5 +21,14 @@ $(document).ready(function() {
         $('.add-std-checkbox:checked').each(function() {
             selectedStudentIds.push($(this).val());
         });
+    });
+
+    $('button[data-target="#confirmDelete"]').on('click', function() {
+        $('#confirmDelete').modal('show');
+
+    });
+
+    $('#confirmNotDelete, #confirmNotDelete2').on('click', function() {
+        $('#confirmDelete').modal('hide');
     });    
 });

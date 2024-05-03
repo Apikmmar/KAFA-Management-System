@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateActivityRequest;
 use App\Http\Requests\CreateClassRequest;
+use App\Http\Requests\UpdateActivityRequest;
 use App\Models\Activity;
 use App\Models\Classroom;
 use App\Models\Student;
@@ -63,7 +65,7 @@ class ScheduleController extends Controller
         return view('ManageSchedule.Teacher.activity_details', compact('activity'));
     }
 
-    public function createClassroom(CreateClassRequest $request) {
+    public function createclassroom(CreateClassRequest $request) {
         $data = $request->validated();
         
         $class = Classroom::create([
@@ -83,5 +85,51 @@ class ScheduleController extends Controller
         }
         
         return redirect()->route('addclassroom')->with('message', 'Successfully Create New Class');
+    }
+
+    public function createclassactivity(CreateActivityRequest $request) {
+        $data = $request->validated();
+
+        $user = Auth::user();
+        $class = Classroom::where('teacher_id', $user->id)->first();
+
+        $activity = Activity::create([
+            'classroom_id' => $class->id,
+            'activity_name' => $data['activity_name'],
+            'activity_description' => $data['activity_description'],
+            'activity_date' => $data['activity_date'],
+            'activity_starttime' => $data['activity_starttime'],
+            'activity_endtime' => $data['activity_endtime'],
+            'activity_remarks' => $data['activity_remarks'],
+        ]);
+
+        $activity->save();
+
+        return redirect()->route('classactivity')->with('message', 'Successfully Create New Activity');
+    }
+
+    public function updateclassactivity(UpdateActivityRequest $request, $id) {
+        $activity = Activity::findOrFail($id);
+
+        $validatedData = $request->validated();
+
+        $activity->update([
+            'activity_name' => $validatedData['activity_name'],
+            'activity_description' => $validatedData['activity_description'],
+            'activity_date' => $validatedData['activity_date'],
+            'activity_starttime' => $validatedData['activity_starttime'],
+            'activity_endtime' => $validatedData['activity_endtime'],
+            'activity_remarks' => $validatedData['activity_remarks'],
+        ]);
+
+        return redirect()->route('activitydetails', ['id' => $activity->id])->with('message', 'Successfully Update Activity');
+    }
+
+    public function deleteclassactivity($id) {
+        $activity = Activity::findOrFail($id);
+
+        $activity->delete();
+
+        return redirect()->route('classactivity')->with('message', 'Successfully Delete Activity');
     }
 }
