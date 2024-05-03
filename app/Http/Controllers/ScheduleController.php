@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateClassRequest;
+use App\Models\Activity;
 use App\Models\Classroom;
 use App\Models\Student;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ScheduleController extends Controller
 {
@@ -29,6 +32,35 @@ class ScheduleController extends Controller
         $students = Student::all()->where('classroom_id', null);
 
         return view('ManageSchedule.KAFA-Admin.add_classroom', compact('teachers', 'students'));
+    }
+
+    public function classactivity() {
+        $user = Auth::user();
+
+        $class = Classroom::where('teacher_id', $user->id)->first();
+
+        $activities = $class->activities;
+
+        $activities->transform(function ($activity) {
+            $activity->activity_date = Carbon::parse($activity->activity_date)->format('j F Y');
+            $activity->activity_starttime = Carbon::parse($activity->activity_starttime)->format('h:i A');
+            $activity->activity_endtime = Carbon::parse($activity->activity_endtime)->format('h:i A');
+
+            return $activity;
+        });
+
+        return view('ManageSchedule.Teacher.class_activity', compact('class', 'activities'));
+    }
+
+    public function newactivity() {
+
+        return view('ManageSchedule.Teacher.new_activity');
+    }
+
+    public function activitydetails($id) {
+        $activity = Activity::findOrFail($id);
+
+        return view('ManageSchedule.Teacher.activity_details', compact('activity'));
     }
 
     public function createClassroom(CreateClassRequest $request) {
