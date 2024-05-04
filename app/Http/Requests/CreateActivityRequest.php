@@ -21,14 +21,25 @@ class CreateActivityRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
-    {
+    public function rules(): array {
         return [
             'activity_name' => 'required|string|max:30',
             'activity_description' => 'required|string|max:100',
             'activity_date' =>'required|date|after_or_equal:' . Date::today()->format('d-m-Y'),
             'activity_starttime' => 'required|date_format:H:i|after_or_equal:14:00',
-            'activity_endtime' => 'required|date_format:H:i|before_or_equal:18:00',
+            'activity_endtime' => [
+                'required',
+                'date_format:H:i',
+                'before_or_equal:18:00',
+                'after_or_equal:activity_starttime',
+                function ($attribute, $value, $fail) {
+                    $startTime = \Carbon\Carbon::parse($this->input('activity_starttime'));
+                    $endTime = \Carbon\Carbon::parse($value);
+                    if ($endTime->diffInMinutes($endTime) > 60) {
+                        $fail('The end time must not exceed 1 hour after the start time.');
+                    }
+                }
+            ],
             'activity_remarks' => 'required|string|max:30',
         ];
     }
