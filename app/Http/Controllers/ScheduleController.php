@@ -41,7 +41,7 @@ class ScheduleController extends Controller
 
         $class = Classroom::where('teacher_id', $user->id)->first();
 
-        $activities = $class->activities;
+        $activities = $class->activities()->orderBy('activity_date')->orderBy('activity_starttime')->get();
 
         $activities->transform(function ($activity) {
             $activity->activity_date = Carbon::parse($activity->activity_date)->format('j F Y');
@@ -74,8 +74,23 @@ class ScheduleController extends Controller
 
     public function kafaschedule($id) {
         $activities = Activity::where('classroom_id', $id)->get();
+
+        $activities->transform(function ($activity) {
+            $activity->activity_date = Carbon::parse($activity->activity_date)->format('j F Y');
+            $activity->activity_starttime = Carbon::parse($activity->activity_starttime)->format('h:i A');
+            $activity->activity_endtime = Carbon::parse($activity->activity_endtime)->format('h:i A');
+
+            return $activity;
+        });
+
+        $todayDate = Carbon::now();
+
+        $nextDates = [];
+        for ($i = 1; $i <= 5; $i++) {
+            $nextDates[] = Carbon::parse($todayDate->addDays()->toDateString())->format('j F Y');
+        }
         
-        return view('ManageSchedule.Parent.kafa_schedule', compact('activities'));
+        return view('ManageSchedule.Parent.kafa_schedule', compact('activities', 'nextDates'));
     }
 
     public function createClassroom(CreateClassRequest $request) {
