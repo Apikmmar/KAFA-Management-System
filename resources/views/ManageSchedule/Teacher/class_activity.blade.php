@@ -8,14 +8,17 @@
         </div>
     @endif
         <div>
-        @if ($classes->isNotEmpty())
+        @if ($activities->isNotEmpty())
+            <p class="h3 fw-bold">{{ $class->class_name }} Activity</p>
             <table class="table">
                 <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Class Name</th>
-                    <th scope="col">Class Teacher</th>
-                    <th scope="col">Class Description</th>
+                    <th scope="col">Activity Name</th>
+                    <th scope="col">Activity Description</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Time</th>
+                    <th scope="col">Remarks</th>
                     <th scope="col">Manage</th>
                 </tr>
                 </thead>
@@ -23,14 +26,16 @@
                 @php
                     $num = 1
                 @endphp
-                @foreach ($classes as $class)
+                @foreach ($activities as $activity)
                     <tr>
                     <th scope="row">{{ $num }}</th>
-                    <td>{{ $class->class_name }}</td>
-                    <td>{!! optional($class->teacher)->user_name ?? '<i>Not Set Up</i>' !!}</td>
-                    <td>{{ $class->class_description }}</td>
+                    <td>{{ $activity->activity_name }}</td>
+                    <td>{{ $activity->activity_description }}</td>
+                    <td>{{ $activity->activity_date }}</td>
+                    <td>{{ $activity->activity_starttime }} - {{ $activity->activity_endtime }}</td>
+                    <td>{{ $activity->activity_remarks }}</td>
                     <td>
-                        <a href="{{ route('viewclassroom', ['id' => $class->id]) }}" class="btn btn-sm btn-info fw-bold text-white">View</a>
+                        <a href="{{ route('activitydetails', ['id' => $activity->id]) }}" class="btn btn-sm btn-info fw-bold text-white">Edit</a>
                     </td>
                     </tr>
                     @php
@@ -41,13 +46,13 @@
             </table>
         @else
             <div class="d-flex justify-content-center">
-                <p class="h4 fw-bold">No Class Created Yet</p>
+                <p class="h4 fw-bold">No Activity Created Yet</p>
             </div>
         @endif
         </div>
         <br>
         <div class="d-flex justify-content-end me-4">
-            <a href="/add_classroom" class="btn btn-primary fw-bold">Add Class</a>
+            <a href="/new_activity" class="btn btn-primary fw-bold">Create Activity</a>
         </div>
 
     </div>

@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ScheduleController;
-use App\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -40,14 +39,23 @@ Route::group(['middleware' => 'role:2'], function () {
 
     Route::get('/all_class', [ScheduleController::class, 'allclass'])->name('allclass');
     Route::get('/add_classroom', [ScheduleController::class, 'addclassroom'])->name('addclassroom');
-    Route::get('/view_classroom', [ScheduleController::class, 'viewclassroom'])->name('viewclassroom');
+    Route::post('/add_classroom', [ScheduleController::class, 'createClassroom'])->name('addclassroom.create');
+    Route::get('/view_classroom/{id}', [ScheduleController::class, 'viewclassroom'])->name('viewclassroom');
 });
 
 Route::group(['middleware' => 'role:3'], function () {
     Route::get('/registerchild', [AccountController::class, 'registerchild'])->name('registerchild');
     Route::post('/registerchild', [AccountController::class, 'createchild'])->name('registerchild.create');
+
+    Route::get('/child_kafa', [ScheduleController::class, 'childkafa'])->name('childkafa');
+    Route::get('/kafa_schedule/{id}', [ScheduleController::class, 'kafaschedule'])->name('kafaschedule');
 });
 
 Route::group(['middleware' => 'role:4'], function () {
-    
+    Route::get('/class_activity', [ScheduleController::class, 'classactivity'])->name('classactivity');
+    Route::get('/new_activity', [ScheduleController::class, 'newactivity'])->name('newactivity');
+    Route::post('/new_activity', [ScheduleController::class, 'createClassActivity'])->name('newactivity.create');
+    Route::get('/activity_details/{id}', [ScheduleController::class, 'activitydetails'])->name('activitydetails');
+    Route::put('/activity_details/{id}', [ScheduleController::class, 'UpdateClassactivity'])->name('activitydetails.update');
+    Route::delete('/activity_details/{id}', [ScheduleController::class, 'deleteClassActivity'])->name('activitydetails.delete');
 });

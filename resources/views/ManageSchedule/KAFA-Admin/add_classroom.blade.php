@@ -10,7 +10,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div>
-                    <form method="POST" action="" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('addclassroom.create') }}" enctype="multipart/form-data">
                         @csrf
 
                         <div class="row mb-3">
@@ -28,7 +28,7 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="class_description" class="col-md-4 col-form-label text-md-end">{{ __('Class Name') }}</label>
+                            <label for="class_description" class="col-md-4 col-form-label text-md-end">{{ __('Class Description') }}</label>
                         
                             <div class="col-md-6">
                                 <textarea id="class_description" class="form-control @error('class_description') is-invalid @enderror" name="class_description" required autocomplete="class_description" autofocus>{{ old('class_description') }}</textarea>
@@ -78,17 +78,17 @@
                                 @endphp
                                 @foreach ($students as $student)
                                     <tr>
-                                    <th scope="row">{{ $num }}</th>
-                                    <td>{{ $student->student_ic }}</td>
-                                    <td>{{ $student->student_name }}</td>
-                                    <td>{{ $student->student_gender }}</td>
-                                    <td>{{ $student->student_age }}</td>
-                                    <td>
-                                        <a href="" class="btn btn-sm btn-primary fw-bold text-white">Add</a>
-                                    </td>
+                                        <th scope="row">{{ $num }}</th>
+                                        <td>{{ $student->student_ic }}</td>
+                                        <td>{{ $student->student_name }}</td>
+                                        <td>{{ $student->student_gender }}</td>
+                                        <td>{{ $student->student_age }}</td>
+                                        <td>
+                                            <input type="checkbox" class="form-check-input add-std-checkbox" name="add_std[]" value="{{ $student->id }}">
+                                        </td>
                                     </tr>
                                     @php
-                                        $num++
+                                        $num++;
                                     @endphp
                                 @endforeach
                                 </tbody>
@@ -97,7 +97,8 @@
                         <br>
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn text-white fw-bold btn-primary">
+                                    <button type="submit" class="btn text-white fw-bold btn-primary" id="submitButton">
+
                                     {{ __('Add') }}
                                 </button>
 
