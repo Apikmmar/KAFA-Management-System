@@ -42,7 +42,7 @@
             @elseif($isParent)
                 {{-- Parent --}}
                 <a href="/registerchild" class="list-group-item btn {{ $btncolor }} btn-lg">Register Child</a>
-                <a href="#" class="list-group-item btn {{ $btncolor }} btn-lg">Child Activity</a>
+                <a href="/child_kafa" class="list-group-item btn {{ $btncolor }} btn-lg">Child Activity</a>
                 <a href="#" class="list-group-item btn {{ $btncolor }} btn-lg">Result</a>
 
             @elseif($isTeacher)

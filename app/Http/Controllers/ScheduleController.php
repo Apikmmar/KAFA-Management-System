@@ -65,7 +65,19 @@ class ScheduleController extends Controller
         return view('ManageSchedule.Teacher.activity_details', compact('activity'));
     }
 
-    public function createclassroom(CreateClassRequest $request) {
+    public function childkafa() {
+        $parent = Auth::user();
+        $childs = Student::where('parent_id', $parent->id)->get();
+
+        return view('ManageSchedule.Parent.child_kafa', compact('childs'));
+    }
+
+    public function kafaschedule() {
+        
+        return view('ManageSchedule.Parent.kafa_schedule');
+    }
+
+    public function createClassroom(CreateClassRequest $request) {
         $data = $request->validated();
         
         $class = Classroom::create([
@@ -87,7 +99,7 @@ class ScheduleController extends Controller
         return redirect()->route('addclassroom')->with('message', 'Successfully Create New Class');
     }
 
-    public function createclassactivity(CreateActivityRequest $request) {
+    public function createClassActivity(CreateActivityRequest $request) {
         $data = $request->validated();
 
         $user = Auth::user();
@@ -108,7 +120,7 @@ class ScheduleController extends Controller
         return redirect()->route('classactivity')->with('message', 'Successfully Create New Activity');
     }
 
-    public function updateclassactivity(UpdateActivityRequest $request, $id) {
+    public function updateClassActivity(UpdateActivityRequest $request, $id) {
         $activity = Activity::findOrFail($id);
 
         $validatedData = $request->validated();
@@ -125,7 +137,7 @@ class ScheduleController extends Controller
         return redirect()->route('activitydetails', ['id' => $activity->id])->with('message', 'Successfully Update Activity');
     }
 
-    public function deleteclassactivity($id) {
+    public function deleteClassActivity($id) {
         $activity = Activity::findOrFail($id);
 
         $activity->delete();
