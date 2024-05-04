@@ -22,4 +22,8 @@ class Activity extends Model
     public function classroom() {
         return $this->belongsTo(Classroom::class);
     }
+
+    public function result() {
+        return $this->hasOne(Result::class);
+    }
 }

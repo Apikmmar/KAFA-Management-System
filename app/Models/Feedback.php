@@ -10,7 +10,6 @@ class Feedback extends Model
     use HasFactory;
 
     protected $filable = [
-        'user_id',
         'feedback_title',
         'feedback_description',
     ];

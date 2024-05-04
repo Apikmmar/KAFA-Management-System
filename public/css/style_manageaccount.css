@@ -9,6 +9,11 @@
 }
 
 .frontimage {
-    width: 130px;
+    width: 300px;
+    height: auto;
+}
+
+.frontimage2 {
+    width: 180px;
     height: auto;
 }

@@ -17,4 +17,8 @@ class Notice extends Model
         'notice_submission_date',
         'notice_status',
     ];
+
+    public function notices() {
+        return $this->belongsTo(User::class);
+    }
 }

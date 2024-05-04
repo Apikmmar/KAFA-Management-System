@@ -24,7 +24,7 @@
     <div class="container-fluid">
         <div class="d-flex align-items-center">
             <a class="navbar-brand ms-md-3" href="/home">
-                <img src="{{ asset('default_image/mantantersakiti.jpeg') }}" alt="kafahome.jpeg" width="45" height="50">
+                <img src="{{ asset('default_image/kafa-logo.png') }}" alt="kafahome.jpeg" width="45" height="50">
             </a>
             <p class="h4 fw-bold text-dark m-0">Kafa Management System</p>
         </div>

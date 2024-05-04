@@ -15,11 +15,12 @@ return new class extends Migration
             $table->id();
             $table->foreignId('student_id');
             $table->foreignId('user_id');
+            $table->foreignId('activity_id');
+            $table->foreignId('examination_id');
             $table->integer('result_marks');
             $table->string('result_feedback', 50);
             $table->char('result_grades');
             $table->string('result_status');
-            $table->string('result_subject', 50);
             $table->timestamps();
         });
     }

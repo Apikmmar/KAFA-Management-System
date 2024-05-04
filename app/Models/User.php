@@ -59,4 +59,12 @@ class User extends Authenticatable
     public function classteacher() {
         return $this->belongsTo(Classroom::class);
     }
+
+    public function mark() {
+        return $this->hasMany(Result::class, 'user_id', 'id');
+    }
+
+    public function notice() {
+        return $this->hasMany(Notice::class);
+    }
 }

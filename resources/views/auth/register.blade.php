@@ -2,8 +2,8 @@
 
 @section('content')
 <div class="container">
-    <div class="mb-2">
-        <img src="{{ asset('default_image/mantantersakiti.jpeg') }}" class="rounded mx-auto d-block frontimage" alt="kafalogo.jpeg">
+    <div class="mb-3">
+        <img src="{{ asset('default_image/kafa-logo.png') }}" class="rounded mx-auto d-block frontimage2" alt="kafalogo.jpeg">
     </div>
     <div class="row justify-content-center">
         <div class="col-md-8">
