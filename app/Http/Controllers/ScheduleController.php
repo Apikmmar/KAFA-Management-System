@@ -72,9 +72,10 @@ class ScheduleController extends Controller
         return view('ManageSchedule.Parent.child_kafa', compact('childs'));
     }
 
-    public function kafaschedule() {
+    public function kafaschedule($id) {
+        $activities = Activity::where('classroom_id', $id)->get();
         
-        return view('ManageSchedule.Parent.kafa_schedule');
+        return view('ManageSchedule.Parent.kafa_schedule', compact('activities'));
     }
 
     public function createClassroom(CreateClassRequest $request) {

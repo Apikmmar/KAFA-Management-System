@@ -8,7 +8,9 @@
         </div>
     @endif
         <div>
-
+            @foreach ($activities as $item)
+                {{ $item }}
+            @endforeach
         </div>
     </div>
 @endsection

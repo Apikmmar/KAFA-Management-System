@@ -8,38 +8,35 @@
         </div>
     @endif
         <div>
-            @foreach ($childs as $item)
-                {{ $item }}
-            @endforeach
-        {{-- @if ($childs->isNotEmpty())
-            <p class="h3 fw-bold">{{ $class->class_name }} Activity</p>
+            
+        @if ($childs->isNotEmpty())
             <table class="table">
                 <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Activity Name</th>
-                    <th scope="col">Activity Description</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Time</th>
-                    <th scope="col">Remarks</th>
-                    <th scope="col">Manage</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Identity Card Number</th>
+                    <th scope="col">Classroom</th>
+                    <th scope="col">Schedule</th>
                 </tr>
                 </thead>
                 <tbody>
                 @php
                     $num = 1
                 @endphp
-                @foreach ($activities as $activity)
+                @foreach ($childs as $child)
                     <tr>
-                    <th scope="row">{{ $num }}</th>
-                    <td>{{ $activity->activity_name }}</td>
-                    <td>{{ $activity->activity_description }}</td>
-                    <td>{{ $activity->activity_date }}</td>
-                    <td>{{ $activity->activity_starttime }} - {{ $activity->activity_endtime }}</td>
-                    <td>{{ $activity->activity_remarks }}</td>
-                    <td>
-                        <a href="{{ route('activitydetails', ['id' => $activity->id]) }}" class="btn btn-sm btn-info fw-bold text-white">Edit</a>
-                    </td>
+                        <th scope="row">{{ $num }}</th>
+                        <td>{{ $child->student_name }}</td>
+                        <td>{{ $child->student_ic }}</td>
+                        <td>{{ optional($child->student)->class_name ?? 'No Class Yet' }}</td>
+                        <td>
+                        @if (is_null($child->classroom_id))
+                            <i>Not Available</i>
+                        @else
+                            <a href="{{ route('kafaschedule', ['id' => $child->classroom_id]) }}" class="btn btn-sm btn-info fw-bold text-white">View</a>
+                        @endif
+                        </td>
                     </tr>
                     @php
                         $num++
@@ -51,7 +48,7 @@
             <div class="d-flex justify-content-center">
                 <p class="h4 fw-bold">No Activity Created Yet</p>
             </div>
-        @endif --}}
+        @endif
         </div>
     </div>
 @endsection

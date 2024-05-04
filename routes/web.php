@@ -48,7 +48,7 @@ Route::group(['middleware' => 'role:3'], function () {
     Route::post('/registerchild', [AccountController::class, 'createchild'])->name('registerchild.create');
 
     Route::get('/child_kafa', [ScheduleController::class, 'childkafa'])->name('childkafa');
-    Route::get('/kafa_schedule', [ScheduleController::class, 'kafaschedule'])->name('kafaschedule');
+    Route::get('/kafa_schedule/{id}', [ScheduleController::class, 'kafaschedule'])->name('kafaschedule');
 });
 
 Route::group(['middleware' => 'role:4'], function () {
