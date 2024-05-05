@@ -1,12 +1,15 @@
 @extends('layouts.master')
 
 @section('content')
+
     <div class="container">
+
     @if(session('message'))
         <div class="alert alert-info" id="success-message">
             {{ session('message') }}
         </div>
     @endif
+
         <div class="row justify-content-center mt-3 mb-3">
             <div class="col-md-8">
                 <div>
@@ -140,4 +143,5 @@
             </div>
         </div>
     </div>
+
 @endsection

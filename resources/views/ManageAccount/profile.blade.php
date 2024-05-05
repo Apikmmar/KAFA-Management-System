@@ -1,12 +1,15 @@
 @extends('layouts.master')
 
 @section('content')
+
     <div class="container mt-3 mb-3">
+
     @if(session('message'))
         <div class="alert alert-info" id="success-message">
             {{ session('message') }}
         </div>
     @endif
+    
         <div class="row justify-content-center">
             <form action="{{ route('profile.update', ['id' => $user->id]) }}" method="post" enctype="multipart/form-data">
                 @csrf
@@ -146,12 +149,15 @@
                 
                 <div class="d-flex justify-content-center">
                     <button type="submit" class="btn btn-primary fw-bold">Update</button>
+
                 @foreach (range(1, 5) as $index)
                     &nbsp;
                 @endforeach
+                
                     <button type="reset" class="btn btn-danger fw-bold">Reset</button>
                 </div>
             </form>
         </div>
     </div>
+
 @endsection
