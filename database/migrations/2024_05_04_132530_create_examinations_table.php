@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('examinations', function (Blueprint $table) {
             $table->id();
-            $table->string('exam_type', 50);
-            $table->string('school_session', 20);
-            $table->string('approval_status', 20);
-            $table->string('exam_comment', 100);
+            $table->string('exam_type', 50); // exam type
+            $table->string('school_session', 20); // school session
+            $table->string('approval_status', 20); // exam release approval status
+            $table->string('exam_comment', 100); // examination comment
             $table->timestamps();
         });
     }

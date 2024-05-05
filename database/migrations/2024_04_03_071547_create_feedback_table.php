@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('feedback', function (Blueprint $table) {
             $table->id();
-            $table->string('feedback_title', 50);
-            $table->string('feedback_description', 100);
+            $table->string('feedback_title', 50); // feedback title
+            $table->string('feedback_description', 100); // feedback descrption
             $table->timestamps();
         });
     }

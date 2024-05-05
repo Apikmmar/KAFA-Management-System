@@ -9,6 +9,7 @@ class Notice extends Model
 {
     use HasFactory;
 
+    // allow to input
     protected $fillable = [
         'user_id',
         'notice_title',
@@ -18,6 +19,7 @@ class Notice extends Model
         'notice_status',
     ];
 
+    // many to one relationsip with User model
     public function notices() {
         return $this->belongsTo(User::class);
     }

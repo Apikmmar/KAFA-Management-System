@@ -9,6 +9,7 @@ class Examination extends Model
 {
     use HasFactory;
 
+    // allow to input
     protected $fillable = [
         'exam_type',
         'school_session',
@@ -16,6 +17,7 @@ class Examination extends Model
         'exam_comment',
     ];
 
+    // one to many relationsip with Result model
     public function result() {
         return $this->hasMany(Result::class);
     }

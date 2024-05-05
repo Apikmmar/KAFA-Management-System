@@ -9,6 +9,7 @@ class Result extends Model
 {
     use HasFactory;
 
+    // allow to input
     protected $fillable = [
         'student_id',
         'user_id',
@@ -21,18 +22,22 @@ class Result extends Model
         'result_subject',
     ];
 
+    // many to one relationsip with Student model
     public function studentresult() {
         return $this->belongsTo(Student::class, 'student_id', 'id');
     }
 
+    // many to one relationsip with User model
     public function markbyteacher() {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
+    // many to one relationsip with Examination model
     public function examination() {
         return $this->belongsTo(Examination::class);
     }
 
+    // many to one relationsip with Activity model
     public function activity() {
         return $this->belongsTo(Activity::class);
     }

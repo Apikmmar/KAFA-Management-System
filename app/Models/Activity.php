@@ -9,6 +9,7 @@ class Activity extends Model
 {
     use HasFactory;
 
+    // allow to input
     protected $fillable = [
         'classroom_id',
         'activity_name',
@@ -19,10 +20,12 @@ class Activity extends Model
         'activity_remarks',
     ];
 
+    // many to one relationship with Classroom model
     public function classroom() {
         return $this->belongsTo(Classroom::class);
     }
 
+    // one to one relationship with Result model
     public function result() {
         return $this->hasOne(Result::class);
     }

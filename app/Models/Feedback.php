@@ -9,6 +9,7 @@ class Feedback extends Model
 {
     use HasFactory;
 
+    // allow to input
     protected $filable = [
         'feedback_title',
         'feedback_description',

@@ -9,6 +9,7 @@ class Student extends Model
 {
     use HasFactory;
 
+    // allow to input
     protected $fillable = [
         'classroom_id',
         'parent_id',
@@ -19,14 +20,17 @@ class Student extends Model
         'student_verification',
     ];
 
+    // many to one relationsip with Classroom model
     public function student() {
         return $this->belongsTo(Classroom::class, 'classroom_id', 'id');
     }
 
+    // many to one relationsip with User model
     public function parent() {
         return $this->belongsTo(User::class, 'parent_id', 'id');
     }
 
+    // one to many relationsip with Result model
     public function result() {
         return $this->hasMany(Result::class);
     }

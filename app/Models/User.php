@@ -17,6 +17,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    // allow to input
     protected $fillable = [
         'role_id',
         'user_name',
@@ -48,22 +49,27 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    // one to one relationsip with Role model
     public function role() {
         return $this->hasOne(Role::class, 'id', 'role_id');
     }
 
+    // one to many relationsip with Student model
     public function child() {
         return $this->hasMany(Student::class);
     }
 
+    // many to one relationsip with Classroom model
     public function classteacher() {
         return $this->belongsTo(Classroom::class);
     }
 
+    // one to many relationsip with Result model
     public function mark() {
         return $this->hasMany(Result::class, 'user_id', 'id');
     }
 
+    // one to many relationsip with Notice model
     public function notice() {
         return $this->hasMany(Notice::class);
     }

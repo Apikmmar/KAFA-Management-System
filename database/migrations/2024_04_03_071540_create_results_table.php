@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('results', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('student_id');
-            $table->foreignId('user_id');
-            $table->foreignId('activity_id');
-            $table->foreignId('examination_id');
-            $table->integer('result_marks');
-            $table->string('result_feedback', 50);
-            $table->char('result_grades');
-            $table->string('result_status');
+            $table->foreignId('student_id'); // student id
+            $table->foreignId('user_id'); // parent id
+            $table->foreignId('activity_id'); // activity id
+            $table->foreignId('examination_id'); // examination id
+            $table->integer('result_marks'); // result's mark
+            $table->string('result_feedback', 50); // result's feedback
+            $table->char('result_grades'); // grade
+            $table->string('result_status'); // result status
             $table->timestamps();
         });
     }
