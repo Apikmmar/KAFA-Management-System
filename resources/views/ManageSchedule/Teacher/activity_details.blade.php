@@ -1,12 +1,15 @@
 @extends('layouts.master')
 
 @section('content')
+
     <div class="container mt-3 mb-3">
+
     @if(session('message'))
         <div class="alert alert-info" id="success-message">
             {{ session('message') }}
         </div>
     @endif
+
     <div>
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -117,13 +120,16 @@
                             </div>
                         </div>
                     </form>
+
                     <div class="col-md-6 offset-md-6" style="margin-top: -37.8px">
                         <form action="{{ route('activitydetails.delete', ['id' => $activity->id]) }}" method="POST">
                             @csrf
                             @method('DELETE')
+
                             <button type="button" class="btn text-white fw-bold btn-danger" data-target="#confirmDelete">
                                 {{ __('Delete') }}
                             </button>
+
                             <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
@@ -141,10 +147,12 @@
                                     </div>
                                 </div>
                             </div>
+
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    
 @endsection

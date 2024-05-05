@@ -17,7 +17,7 @@ class UpdateActivityRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
-     *
+     * Rules is the format that apply for the update activity request
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array

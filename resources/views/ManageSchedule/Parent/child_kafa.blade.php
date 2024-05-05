@@ -1,12 +1,15 @@
 @extends('layouts.master')
 
 @section('content')
+
     <div class="container mt-3 mb-3">
+
     @if(session('message'))
         <div class="alert alert-info" id="success-message">
             {{ session('message') }}
         </div>
     @endif
+
         <div>
             
         @if ($childs->isNotEmpty())
@@ -21,6 +24,7 @@
                 </tr>
                 </thead>
                 <tbody>
+
                 @php
                     $num = 1
                 @endphp
@@ -42,13 +46,16 @@
                         $num++
                     @endphp
                 @endforeach
+                
                 </tbody>
             </table>
         @else
             <div class="d-flex justify-content-center">
-                <p class="h4 fw-bold">No Activity Created Yet</p>
+                <p class="h3 fw-bold">You Not Register Children Yet</p>
             </div>
         @endif
+        
         </div>
     </div>
+
 @endsection

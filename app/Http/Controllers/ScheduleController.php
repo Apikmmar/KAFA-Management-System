@@ -10,117 +10,137 @@ use App\Models\Classroom;
 use App\Models\Student;
 use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ScheduleController extends Controller
 {
-    //
+    // display classroom in all_class page
     public function allclass() {
-        $classes = Classroom::all();
+        $classes = Classroom::all(); // fetch all classroom
 
         return view('ManageSchedule.KAFA-Admin.all_class', compact('classes'));
     }
 
+    // display class detail in view_classroom
     public function viewclassroom($id) {
-        $class = Classroom::findOrFail($id);
-        $students = Student::whereNotNull('classroom_id')->get();
+        $class = Classroom::findOrFail($id); // fetch classroom based on the id
+        $students = Student::whereNotNull('classroom_id')->get(); // fetch student that are registered in the class
 
         return view('ManageSchedule.KAFA-Admin.view_classroom', compact('class', 'students'));
     }
 
+    // display add_classroom form page
     public function addclassroom() {
-        $teachers = User::all()->where('role_id', 4);
-        $students = Student::all()->where('classroom_id', null);
+        $teachers = User::all()->where('role_id', 4); // fetch registered teacher
+        $students = Student::all()->where('classroom_id', null); // fetch all student that not registered into classroom yet 
 
         return view('ManageSchedule.KAFA-Admin.add_classroom', compact('teachers', 'students'));
     }
 
+    // display class activity in class_activity page
     public function classactivity() {
-        $user = Auth::user();
+        $user = Auth::user(); // retrieve authenticated user(teacher)
 
-        $class = Classroom::where('teacher_id', $user->id)->first();
+        $class = Classroom::where('teacher_id', $user->id)->first(); // fetch class that been teach by the teacher(user) based on the teacher's id
 
-        $activities = $class->activities()->orderBy('activity_date')->orderBy('activity_starttime')->get();
-
-        $activities->transform(function ($activity) {
-            $activity->activity_date = Carbon::parse($activity->activity_date)->format('j F Y');
-            $activity->activity_starttime = Carbon::parse($activity->activity_starttime)->format('h:i A');
-            $activity->activity_endtime = Carbon::parse($activity->activity_endtime)->format('h:i A');
-
-            return $activity;
-        });
-
-        return view('ManageSchedule.Teacher.class_activity', compact('class', 'activities'));
+        // check if class is exist
+        if($class != null) {
+            $activities = $class->activities()->orderBy('activity_date')->orderBy('activity_starttime')->get(); // fetch all class activity and order by activity date then activity start time
+    
+            // transform format
+            $activities->transform(function ($activity) {
+                $activity->activity_date = Carbon::parse($activity->activity_date)->format('j F Y'); // reformat activity date
+                $activity->activity_starttime = Carbon::parse($activity->activity_starttime)->format('h:i A'); // reformat activity start time
+                $activity->activity_endtime = Carbon::parse($activity->activity_endtime)->format('h:i A'); // reformat activity end time
+    
+                return $activity;
+            });
+    
+            return view('ManageSchedule.Teacher.class_activity', compact('class', 'activities'));
+        } else {
+            return view('ManageSchedule.Teacher.class_activity', compact('class'));
+        }
     }
 
+    // display new_activity form page
     public function newactivity() {
 
         return view('ManageSchedule.Teacher.new_activity');
     }
 
+    // displat activity details in activity_details page
     public function activitydetails($id) {
-        $activity = Activity::findOrFail($id);
+        $activity = Activity::findOrFail($id); //fetch activity details based on the id
 
         return view('ManageSchedule.Teacher.activity_details', compact('activity'));
     }
 
+    // display registered kafa child in chil_kafa page
     public function childkafa() {
-        $parent = Auth::user();
-        $childs = Student::where('parent_id', $parent->id)->get();
+        $parent = Auth::user(); // retrieve authenticated user(parent)
+        $childs = Student::where('parent_id', $parent->id)->get(); // fetch child data based on the user(parent) id
 
         return view('ManageSchedule.Parent.child_kafa', compact('childs'));
     }
 
+    // display kafa activity schedule in kafa_schedule page.
     public function kafaschedule($id) {
-        $activities = Activity::where('classroom_id', $id)->get();
+        $activities = Activity::where('classroom_id', $id)->get(); //retrieve activities based on the classroom id
 
+        // transform format
         $activities->transform(function ($activity) {
-            $activity->activity_date = Carbon::parse($activity->activity_date)->format('j F Y');
-            $activity->activity_starttime = Carbon::parse($activity->activity_starttime)->format('h:i A');
-            $activity->activity_endtime = Carbon::parse($activity->activity_endtime)->format('h:i A');
+            $activity->activity_date = Carbon::parse($activity->activity_date)->format('j F Y'); // reformat activity date
+            $activity->activity_starttime = Carbon::parse($activity->activity_starttime)->format('h:i A'); // reformat activity start time
+            $activity->activity_endtime = Carbon::parse($activity->activity_endtime)->format('h:i A'); // reformat activity end time
 
             return $activity;
         });
 
+        // get today date
         $todayDate = Carbon::now();
 
+        // generate list of date for 5 days
         $nextDates = [];
         for ($i = 1; $i <= 5; $i++) {
-            $nextDates[] = Carbon::parse($todayDate->addDays()->toDateString())->format('j F Y');
+            $nextDates[] = Carbon::parse($todayDate->addDays()->toDateString())->format('j F Y'); // retrieve and reformat date
         }
         
         return view('ManageSchedule.Parent.kafa_schedule', compact('activities', 'nextDates'));
     }
 
+    // create classroom post method
     public function createClassroom(CreateClassRequest $request) {
-        $data = $request->validated();
+        $data = $request->validated(); // validate the request input
         
+        // create classroom
         $class = Classroom::create([
             'class_name' => $data['class_name'],
             'class_description' => $data['class_description'],
             'teacher_id' => $data['class_teacher'],
         ]);
 
-        $class->save();
+        $class->save(); // save class in the database
 
-        $selectedStudentIds = $request->input('add_std');
+        $selectedStudentIds = $request->input('add_std'); // input request selected student
 
+        // assign student to the classroom
         foreach($selectedStudentIds as $std_id) {
-            $student = Student::findOrFail($std_id);
-            $student->classroom_id = $class->id;
-            $student->save();
+            $student = Student::findOrFail($std_id); // find student based on the student id
+            $student->classroom_id = $class->id; // update student's classroom id to the class id
+            $student->save(); // save data in database
         }
         
         return redirect()->route('addclassroom')->with('message', 'Successfully Create New Class');
     }
 
+    // create activity post method
     public function createClassActivity(CreateActivityRequest $request) {
-        $data = $request->validated();
+        $data = $request->validated(); // validate the request input
 
-        $user = Auth::user();
-        $class = Classroom::where('teacher_id', $user->id)->first();
+        $user = Auth::user(); // retrieve authenticated user(teacher)
+        $class = Classroom::where('teacher_id', $user->id)->first(); // fetch classroom based on the user(teacher) id
 
+        // create activity
         $activity = Activity::create([
             'classroom_id' => $class->id,
             'activity_name' => $data['activity_name'],
@@ -131,16 +151,18 @@ class ScheduleController extends Controller
             'activity_remarks' => $data['activity_remarks'],
         ]);
 
-        $activity->save();
+        $activity->save(); // save activity in database
 
         return redirect()->route('classactivity')->with('message', 'Successfully Create New Activity');
     }
 
+    // update class activity put method
     public function updateClassActivity(UpdateActivityRequest $request, $id) {
-        $activity = Activity::findOrFail($id);
+        $activity = Activity::findOrFail($id); // fetch activity based on the id
 
-        $validatedData = $request->validated();
+        $validatedData = $request->validated(); // validate request input
 
+        // update activity and save in database
         $activity->update([
             'activity_name' => $validatedData['activity_name'],
             'activity_description' => $validatedData['activity_description'],
@@ -153,10 +175,11 @@ class ScheduleController extends Controller
         return redirect()->route('activitydetails', ['id' => $activity->id])->with('message', 'Successfully Update Activity');
     }
 
+    // delete class activity delete  method
     public function deleteClassActivity($id) {
-        $activity = Activity::findOrFail($id);
+        $activity = Activity::findOrFail($id); // fetch class activity based on the id
 
-        $activity->delete();
+        $activity->delete(); // delete activity from database
 
         return redirect()->route('classactivity')->with('message', 'Successfully Delete Activity');
     }
