@@ -7,40 +7,45 @@ use App\Http\Requests\RegisterChildRequest;
 use App\Http\Requests\UpdateProfileRequest;
 use App\Models\Student;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class AccountController extends Controller
 {
-    //
+    // display profile page
     public function profile() {
-        $user = Auth::user();
+        $user = Auth::user(); // retrieve user authentication
 
         return view('ManageAccount.profile', compact('user'));
     }
 
+    // update profile put method
     public function updateProfile(UpdateProfileRequest $request, $id) {
-        $user = User::findOrFail($id);
+        $user = User::findOrFail($id); // fetch user based on id
     
-        $validatedData = $request->validated();
+        $validatedData = $request->validated(); // validate input request
     
+        // check user verification existance
         if ($request->hasFile('user_verification')) {
+
+            // delete existing user verification
             if ($user->user_verification && Storage::disk('public')->exists($user->user_verification)) {
                 Storage::disk('public')->delete($user->user_verification);
             }
 
             $file = $request->file('user_verification');
             $fileName = $file->getClientOriginalName();
-            $path = $file->storeAs('Parent Verification', $fileName, 'public');
-            $user->user_verification = $path;
+            $path = $file->storeAs('Parent Verification', $fileName, 'public'); // store user verification in Parent Verification
+            $user->user_verification = $path; // save path
         }
 
+        // check password update request
         if ($request->filled('new_password')) {
             $user->password = Hash::make($validatedData['new_password']);
         }
     
+        // update user data
         $user->update([
             'user_ic' => $validatedData['user_ic'],
             'user_name' => $validatedData['user_name'],
@@ -52,15 +57,19 @@ class AccountController extends Controller
         return redirect()->route('profile')->with('message', 'Successfully Update Profile');
     }
 
+    // display registerteacher page
     public function registerteacher() {
 
         return view('ManageAccount.KAFA-Admin.registerteacher');
     }
 
+    // create teacher post method
     public function createteacher(AddTeacherRequest $request) {
 
+        // validate input request
         $data = $request->validated();
 
+        // create teacher
         $user = User::create([
             'role_id' => 4,
             'user_name' => $data['user_name'],
@@ -72,7 +81,7 @@ class AccountController extends Controller
             'user_verification' => isset($path) ? $path : 'path',
         ]);
 
-        
+        // save teacher file and path
         if (request()->hasFile('user_verification')) {
             $file = request()->file('user_verification');
             $fileName = $file->getClientOriginalName();
@@ -84,16 +93,19 @@ class AccountController extends Controller
         return redirect()->route('registerteacher')->with('message', 'Successfully Create Teacher Account');
     }
 
+    // display registerchild page
     public function registerchild() {
 
         return view('ManageAccount.Parent.registerchild');
     }
 
+    // createchild post method
     public function createchild(RegisterChildRequest $request) {
-        $parent = Auth::user();
+        $parent = Auth::user(); // fetch user authentication
 
-        $data = $request->validated();
+        $data = $request->validated(); // validate input request
 
+        // create child
         $child = Student::create([
             'student_ic' => $data['child_ic'],
             'parent_id' => $parent->id,
@@ -103,6 +115,7 @@ class AccountController extends Controller
             'student_verification' => isset($path) ? $path : 'path',
         ]);
 
+        // save child file and path
         if (request()->hasFile('child_verification')) {
             $file = request()->file('child_verification');
             $fileName = $file->getClientOriginalName();
