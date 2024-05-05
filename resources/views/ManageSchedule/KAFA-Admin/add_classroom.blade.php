@@ -1,12 +1,15 @@
 @extends('layouts.master')
 
 @section('content')
+
     <div class="container mt-3 mb-3">
+
     @if(session('message'))
         <div class="alert alert-info" id="success-message">
             {{ session('message') }}
         </div>
      @endif
+
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div>
@@ -73,6 +76,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+
                                 @php
                                     $num = 1
                                 @endphp
@@ -91,14 +95,14 @@
                                         $num++;
                                     @endphp
                                 @endforeach
+
                                 </tbody>
                             </table>
                         </div>
                         <br>
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn text-white fw-bold btn-primary" id="submitButton">
-
+                                <button type="submit" class="btn text-white fw-bold btn-primary" id="submitButton">
                                     {{ __('Add') }}
                                 </button>
 
@@ -116,4 +120,5 @@
             </div>
         </div>
     </div>
+    
 @endsection
