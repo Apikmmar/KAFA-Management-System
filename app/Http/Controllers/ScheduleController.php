@@ -24,7 +24,7 @@ class ScheduleController extends Controller
     // display class detail in view_classroom
     public function viewclassroom($id) {
         $class = Classroom::findOrFail($id); // fetch classroom based on the id
-        $students = Student::whereNotNull('classroom_id')->get(); // fetch student that are registered in the class
+        $students = Student::where('classroom_id', $class->id)->get(); // fetch student that are registered in the class
 
         return view('ManageSchedule.KAFA-Admin.view_classroom', compact('class', 'students'));
     }

@@ -6,15 +6,20 @@
     $isTeacher = $userRole->role_id == 4;
 
     $btncolor = null;
+    $activeColor = null;
 
     if ($isMUIPAdmin) {
         $btncolor = 'btn-danger';
+        $activeColor = $btncolor . ' active';
     } elseif($isKAFAAdmin) {
         $btncolor = 'btn-primary';
+        $activeColor = $btncolor . ' active';
     } elseif($isParent) {
         $btncolor = 'btn-warning';
+        $activeColor = $btncolor . ' active';
     } elseif($isTeacher) {
         $btncolor = 'btn-success';
+        $activeColor = $btncolor . ' active';
     }
 @endphp
 
@@ -23,8 +28,8 @@
         <div class="list-group list-group-flush mt-5">
 
             {{-- USE BY ALL USER --}}
-            <a href="/home" class="list-group-item btn {{ $btncolor }} btn-lg">Home</a>
-            <a href="/profile" class="list-group-item btn {{ $btncolor }} btn-lg">Profile</a>
+            <a href="{{ route('home') }}" class="list-group-item btn {{ $btncolor }} btn-lg">Home</a>
+            <a href="{{ route('profile') }}" class="list-group-item btn {{ $btncolor }} btn-lg">Profile</a>
 
             @if ($isMUIPAdmin)
                 {{-- MUIP Admin --}}
@@ -33,21 +38,21 @@
 
             @elseif($isKAFAAdmin)
                 {{-- KAFA Admin --}}
-                <a href="/registerteacher" class="list-group-item btn {{ $btncolor }} btn-lg">Add Teacher</a>
-                <a href="/all_class" class="list-group-item btn {{ $btncolor }} btn-lg">All Class</a>
+                <a href="{{ route('registerteacher') }}" class="list-group-item btn {{ $btncolor }} btn-lg">Add Teacher</a>
+                <a href="{{ route('allclass') }}" class="list-group-item btn {{ $btncolor }} btn-lg">All Class</a>
                 <a href="#" class="list-group-item btn {{ $btncolor }} btn-lg">Report</a>
                 <a href="#" class="list-group-item btn {{ $btncolor }} btn-lg">Notice</a>
                 <a href="#" class="list-group-item btn {{ $btncolor }} btn-lg">Result</a>
 
             @elseif($isParent)
                 {{-- Parent --}}
-                <a href="/registerchild" class="list-group-item btn {{ $btncolor }} btn-lg">Register Child</a>
-                <a href="/child_kafa" class="list-group-item btn {{ $btncolor }} btn-lg">Child Activity</a>
+                <a href="{{ route('registerchild') }}" class="list-group-item btn {{ $btncolor }} btn-lg">Register Child</a>
+                <a href="{{ route('childkafa') }}" class="list-group-item btn {{ $btncolor }} btn-lg">Child Activity</a>
                 <a href="#" class="list-group-item btn {{ $btncolor }} btn-lg">Result</a>
 
             @elseif($isTeacher)
                 {{-- Teacher --}}
-                <a href="/class_activity" class="list-group-item btn {{ $btncolor }} btn-lg">Manage Class</a>
+                <a href="{{ route('classactivity') }}" class="list-group-item btn {{ $btncolor }} btn-lg">Manage Class</a>
                 <a href="#" class="list-group-item btn {{ $btncolor }} btn-lg">KAFA Assessment</a>
                 <a href="#" class="list-group-item btn {{ $btncolor }} btn-lg">Report</a>
                 <a href="#" class="list-group-item btn {{ $btncolor }} btn-lg">Notice</a>
