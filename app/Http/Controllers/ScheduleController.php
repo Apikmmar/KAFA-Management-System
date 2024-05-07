@@ -45,23 +45,23 @@ class ScheduleController extends Controller
     // display class activity in class_activity page
     public function classactivity() {
         $user = Auth::user(); // retrieve authenticated user(teacher)
-
         $class = Classroom::where('teacher_id', $user->id)->first(); // fetch class that been teach by the teacher(user) based on the teacher's id
 
         // check if class is exist
         if($class != null) {
-            $activities = $class->activities()->orderBy('activity_date')->orderBy('activity_starttime')->get(); // fetch all class activity and order by activity date then activity start time
+            $activities = $class->activities()
+                        ->orderBy('activity_date')
+                        ->orderBy('activity_starttime')
+                        ->get(); // fetch all class activity and order by activity date then activity start time
     
             // transform format
             $activities->transform(function ($activity) {
-                $activity->activity_date = Carbon::parse($activity->activity_date)->format('j F Y'); // reformat activity date
-                $activity->activity_starttime = Carbon::parse($activity->activity_starttime)->format('h:i A'); // reformat activity start time
-                $activity->activity_endtime = Carbon::parse($activity->activity_endtime)->format('h:i A'); // reformat activity end time
-    
-                return $activity;
+                return $this->reformatActivities($activity);
             });
+
+            $nextDates = $this->getDates();
     
-            return view('ManageSchedule.Teacher.class_activity', compact('class', 'activities'));
+            return view('ManageSchedule.Teacher.class_activity', compact('class', 'activities', 'nextDates'));
         } else {
             return view('ManageSchedule.Teacher.class_activity', compact('class'));
         }
@@ -74,11 +74,14 @@ class ScheduleController extends Controller
         return view('ManageSchedule.Teacher.new_activity', compact('subjects'));
     }
 
-    // displat activity details in activity_details page
+    // display activity details in activity_details page
     public function activitydetails($id) {
         $activity = Activity::findOrFail($id); //fetch activity details based on the id
+        $subjects = Subject::all(); // fetch all subject
 
-        return view('ManageSchedule.Teacher.activity_details', compact('activity'));
+        $subject = $activity->subject->id; // tetrieve subject name associate with the activity
+
+        return view('ManageSchedule.Teacher.activity_details', compact('activity', 'subject', 'subjects'));
     }
 
     // display registered kafa child in chil_kafa page
@@ -93,15 +96,27 @@ class ScheduleController extends Controller
     public function kafaschedule($id) {
         $activities = Activity::where('classroom_id', $id)->get(); //retrieve activities based on the classroom id
 
-        // transform format
         $activities->transform(function ($activity) {
-            $activity->activity_date = Carbon::parse($activity->activity_date)->format('j F Y'); // reformat activity date
-            $activity->activity_starttime = Carbon::parse($activity->activity_starttime)->format('h:i A'); // reformat activity start time
-            $activity->activity_endtime = Carbon::parse($activity->activity_endtime)->format('h:i A'); // reformat activity end time
-
-            return $activity;
+            return $this->reformatActivities($activity);
         });
 
+        $nextDates = $this->getDates();
+        
+        return view('ManageSchedule.Parent.kafa_schedule', compact('activities', 'nextDates'));
+    }
+
+    // reformat activity date, start and end time 
+    protected function reformatActivities($activity) {
+        // transform format
+        $activity->activity_date = Carbon::parse($activity->activity_date)->format('j F Y'); // reformat activity date
+        $activity->activity_starttime = Carbon::parse($activity->activity_starttime)->format('h:i A'); // reformat activity start time
+        $activity->activity_endtime = Carbon::parse($activity->activity_endtime)->format('h:i A'); // reformat activity end time
+
+        return $activity;
+    }
+
+    // get 5 days of dates 
+    protected function getDates() {
         // get today date
         $todayDate = Carbon::now();
 
@@ -110,8 +125,8 @@ class ScheduleController extends Controller
         for ($i = 1; $i <= 5; $i++) {
             $nextDates[] = Carbon::parse($todayDate->addDays()->toDateString())->format('j F Y'); // retrieve and reformat date
         }
-        
-        return view('ManageSchedule.Parent.kafa_schedule', compact('activities', 'nextDates'));
+
+        return $nextDates;
     }
 
     // create classroom post method
@@ -171,6 +186,7 @@ class ScheduleController extends Controller
 
         // update activity and save in database
         $activity->update([
+            'subject_id' => $validatedData['subject'],
             'activity_name' => $validatedData['activity_name'],
             'activity_description' => $validatedData['activity_description'],
             'activity_date' => $validatedData['activity_date'],

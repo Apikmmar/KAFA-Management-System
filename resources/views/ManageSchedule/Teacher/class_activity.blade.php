@@ -19,6 +19,9 @@
             <div>
     
             @if ($activities->isNotEmpty())
+                
+                @include('ManageSchedule.schedule')
+                <br>
                 <p class="h3 fw-bold">{{ $class->class_name }} Activity</p>
                 <table class="table">
                     <thead>
