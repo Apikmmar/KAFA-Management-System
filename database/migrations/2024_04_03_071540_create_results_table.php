@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('student_id'); // student id
             $table->foreignId('user_id'); // parent id
-            $table->foreignId('activity_id'); // activity id
+            $table->foreignId('subject_id'); // subject id
             $table->foreignId('examination_id'); // examination id
             $table->integer('result_marks'); // result's mark
             $table->string('result_feedback', 50); // result's feedback

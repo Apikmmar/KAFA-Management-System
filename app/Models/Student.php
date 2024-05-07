@@ -31,7 +31,7 @@ class Student extends Model
     }
 
     // one to many relationsip with Result model
-    public function result() {
+    public function results() {
         return $this->hasMany(Result::class);
     }
 }

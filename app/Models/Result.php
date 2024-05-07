@@ -37,8 +37,8 @@ class Result extends Model
         return $this->belongsTo(Examination::class);
     }
 
-    // many to one relationsip with Activity model
+    // many to one relationsip with Subject model
     public function activity() {
-        return $this->belongsTo(Activity::class);
+        return $this->belongsTo(Subject::class);
     }
 }

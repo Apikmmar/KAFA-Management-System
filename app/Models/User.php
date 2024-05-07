@@ -55,7 +55,7 @@ class User extends Authenticatable
     }
 
     // one to many relationsip with Student model
-    public function child() {
+    public function childs() {
         return $this->hasMany(Student::class);
     }
 
@@ -65,12 +65,12 @@ class User extends Authenticatable
     }
 
     // one to many relationsip with Result model
-    public function mark() {
+    public function marks() {
         return $this->hasMany(Result::class, 'user_id', 'id');
     }
 
     // one to many relationsip with Notice model
-    public function notice() {
+    public function notices() {
         return $this->hasMany(Notice::class);
     }
 }
