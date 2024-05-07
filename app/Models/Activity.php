@@ -12,6 +12,7 @@ class Activity extends Model
     // allow to input
     protected $fillable = [
         'classroom_id',
+        'subject_id',
         'activity_name',
         'activity_description',
         'activity_starttime',

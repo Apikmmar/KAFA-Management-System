@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateActivityRequest;
 use App\Models\Activity;
 use App\Models\Classroom;
 use App\Models\Student;
+use App\Models\Subject;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -31,7 +32,11 @@ class ScheduleController extends Controller
 
     // display add_classroom form page
     public function addclassroom() {
-        $teachers = User::all()->where('role_id', 4); // fetch registered teacher
+        $teachers = User::where('role_id', 4)
+                    ->whereNotIn('id', function ($query) {
+                    $query->select('teacher_id')->from('classrooms');
+                    })->get(); // fetch registered teacher that not have class yest
+
         $students = Student::all()->where('classroom_id', null); // fetch all student that not registered into classroom yet 
 
         return view('ManageSchedule.KAFA-Admin.add_classroom', compact('teachers', 'students'));
@@ -64,8 +69,9 @@ class ScheduleController extends Controller
 
     // display new_activity form page
     public function newactivity() {
+        $subjects = Subject::all();
 
-        return view('ManageSchedule.Teacher.new_activity');
+        return view('ManageSchedule.Teacher.new_activity', compact('subjects'));
     }
 
     // displat activity details in activity_details page
@@ -143,6 +149,7 @@ class ScheduleController extends Controller
         // create activity
         $activity = Activity::create([
             'classroom_id' => $class->id,
+            'subject_id' => $data['subject_activity'],
             'activity_name' => $data['activity_name'],
             'activity_description' => $data['activity_description'],
             'activity_date' => $data['activity_date'],

@@ -23,6 +23,7 @@ class CreateActivityRequest extends FormRequest
      */
     public function rules(): array {
         return [
+            'subject_activity' => 'required|numeric',
             'activity_name' => 'required|string|max:30',
             'activity_description' => 'required|string|max:100',
             'activity_date' =>'required|date|after_or_equal:' . Date::today()->format('d-m-Y'),

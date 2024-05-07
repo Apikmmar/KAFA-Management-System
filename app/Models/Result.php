@@ -13,7 +13,7 @@ class Result extends Model
     protected $fillable = [
         'student_id',
         'user_id',
-        'activity_id',
+        'subject_id',
         'examination_id',
         'result_marks',
         'result_feedback',

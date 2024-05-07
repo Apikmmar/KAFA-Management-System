@@ -16,7 +16,28 @@
                     <div>
                         <form method="POST" action="{{ route('newactivity.create') }}" enctype="multipart/form-data">
                             @csrf
+
+                            <div class="row mb-3">
+                                <label for="subject_activity" class="col-md-4 col-form-label text-md-end">{{ __('Subject') }}</label>
     
+                                <div class="col-md-6">
+                                    <select id="subject_activity" name="subject_activity" class="form-select" aria-label="Default select example">
+                                        <option selected value="null" >Select</option>
+
+                                    @foreach ($subjects as $subject)
+                                        <option value="{{ $subject->id }}">{{ $subject->subject_name }}</option>
+                                    @endforeach
+
+                                    </select>
+    
+                                    @error('subject_activity')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
                             <div class="row mb-3">
                                 <label for="activity_name" class="col-md-4 col-form-label text-md-end">{{ __('Activity Name') }}</label>
     
@@ -93,7 +114,7 @@
                                 <div class="col-md-6">
                                     <select id="activity_remarks" name="activity_remarks" class="form-select" aria-label="Default select example">
                                         <option selected value="null">Select</option>
-                                        <option value="Subject">Subject</option>
+                                        <option value="Subject">Learning</option>
                                         <option value="Event">Event</option>
                                     </select>
     
@@ -106,7 +127,7 @@
                             </div>
                             <div class="form-check d-flex justify-content-end" style="margin-top: -15px; margin-bottom: 15px">
                                 <label class="form-check-label" for="flexCheckChecked">
-                                    <small><i>*Event is a class event for that day, Subject is what shall student learn*</i></small>
+                                    <small><i>*Event is a class event for that day, Learning is what shall student learn*</i></small>
                                 </label>
                             </div>
 
