@@ -9,6 +9,16 @@
             {{ session('message') }}
         </div>
     @endif
+
+    @if($errors->any())
+        <div class="alert alert-danger" id="error-message">
+            <ul>
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+            </ul>
+        </div>
+    @endif
     
     @if ($class == null)
         <div class="d-flex justify-content-center">
@@ -19,6 +29,9 @@
             <div>
     
             @if ($activities->isNotEmpty())
+                
+                @include('ManageSchedule.schedule')
+                <br>
                 <p class="h3 fw-bold">{{ $class->class_name }} Activity</p>
                 <table class="table">
                     <thead>

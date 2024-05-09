@@ -10,6 +10,16 @@
         </div>
     @endif
 
+    @if($errors->any())
+        <div class="alert alert-danger" id="error-message">
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <div>
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -17,6 +27,30 @@
                     <form method="POST" action="{{ route('activitydetails.update', ['id' => $activity->id]) }}" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
+
+                        <div class="row mb-3">
+                            <label for="subject" class="col-md-4 col-form-label text-md-end">{{ __('Subject') }}</label>
+                        
+                            <div class="col-md-6">
+                                <select id="subject" name="subject" class="form-select" aria-label="Default select example">
+
+                            @foreach ($subjects as $subs)
+                                @if ($subs->id == $subject)
+                                    <option value="{{ $subs->id }}" selected>{{ $subs->subject_name }}</option>
+                                @else
+                                    <option value="{{ $subs->id }}">{{ $subs->subject_name }}</option>
+                                @endif
+                            @endforeach
+                                
+                                </select>
+                        
+                                @error('subject')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
 
                         <div class="row mb-3">
                             <label for="activity_name" class="col-md-4 col-form-label text-md-end">{{ __('Activity Name') }}</label>
@@ -93,10 +127,10 @@
                         
                             <div class="col-md-6">
                                 <select id="activity_remarks" name="activity_remarks" class="form-select" aria-label="Default select example">
-                                    <option value="null" {{ $activity->activity_remarks == 'null' ? 'selected' : '' }}>Select</option>
+                                    <option value="Select" {{ $activity->activity_remarks == 'Select' ? 'selected' : '' }}>Select</option>
                                     <option value="Subject" {{ $activity->activity_remarks == 'Subject' ? 'selected' : '' }}>Subject</option>
                                     <option value="Event" {{ $activity->activity_remarks == 'Event' ? 'selected' : '' }}>Event</option>
-                                </select>
+                                </select>                                
                         
                                 @error('activity_remarks')
                                     <span class="invalid-feedback" role="alert">

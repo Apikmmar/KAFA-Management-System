@@ -9,6 +9,16 @@
             {{ session('message') }}
         </div>
     @endif
+
+    @if($errors->any())
+        <div class="alert alert-danger" id="error-message">
+            <ul>
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+            </ul>
+        </div>
+    @endif
     
         <div>
             <div class="row justify-content-center">
@@ -16,7 +26,28 @@
                     <div>
                         <form method="POST" action="{{ route('newactivity.create') }}" enctype="multipart/form-data">
                             @csrf
+
+                            <div class="row mb-3">
+                                <label for="subject_activity" class="col-md-4 col-form-label text-md-end">{{ __('Subject') }}</label>
     
+                                <div class="col-md-6">
+                                    <select id="subject_activity" name="subject_activity" class="form-select" aria-label="Default select example">
+                                        <option selected value="null" >Select</option>
+
+                                    @foreach ($subjects as $subject)
+                                        <option value="{{ $subject->id }}">{{ $subject->subject_name }}</option>
+                                    @endforeach
+
+                                    </select>
+    
+                                    @error('subject_activity')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
                             <div class="row mb-3">
                                 <label for="activity_name" class="col-md-4 col-form-label text-md-end">{{ __('Activity Name') }}</label>
     
