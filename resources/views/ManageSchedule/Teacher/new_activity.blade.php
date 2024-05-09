@@ -9,6 +9,16 @@
             {{ session('message') }}
         </div>
     @endif
+
+    @if($errors->any())
+        <div class="alert alert-danger" id="error-message">
+            <ul>
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+            </ul>
+        </div>
+    @endif
     
         <div>
             <div class="row justify-content-center">
@@ -114,7 +124,7 @@
                                 <div class="col-md-6">
                                     <select id="activity_remarks" name="activity_remarks" class="form-select" aria-label="Default select example">
                                         <option selected value="null">Select</option>
-                                        <option value="Subject">Learning</option>
+                                        <option value="Subject">Subject</option>
                                         <option value="Event">Event</option>
                                     </select>
     
@@ -127,7 +137,7 @@
                             </div>
                             <div class="form-check d-flex justify-content-end" style="margin-top: -15px; margin-bottom: 15px">
                                 <label class="form-check-label" for="flexCheckChecked">
-                                    <small><i>*Event is a class event for that day, Learning is what shall student learn*</i></small>
+                                    <small><i>*Event is a class event for that day, Subject is what shall student learn*</i></small>
                                 </label>
                             </div>
 

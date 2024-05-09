@@ -10,6 +10,16 @@
         </div>
     @endif
 
+    @if($errors->any())
+        <div class="alert alert-danger" id="error-message">
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <div>
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -118,7 +128,7 @@
                             <div class="col-md-6">
                                 <select id="activity_remarks" name="activity_remarks" class="form-select" aria-label="Default select example">
                                     <option value="Select" {{ $activity->activity_remarks == 'Select' ? 'selected' : '' }}>Select</option>
-                                    <option value="Learning" {{ $activity->activity_remarks == 'Subject' ? 'selected' : '' }}>Learning</option>
+                                    <option value="Subject" {{ $activity->activity_remarks == 'Subject' ? 'selected' : '' }}>Subject</option>
                                     <option value="Event" {{ $activity->activity_remarks == 'Event' ? 'selected' : '' }}>Event</option>
                                 </select>                                
                         

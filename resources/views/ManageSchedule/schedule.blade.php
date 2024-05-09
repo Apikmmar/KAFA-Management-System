@@ -1,5 +1,5 @@
 <div class="container">
-    <h1 class="text-center">Weekly Timetable</h1>
+    <h1 class="text-center">Weekly Timetable of {{ $class->class_name }}</h1>
     <table class="table table-bordered" id="timetable">
         <thead>
             <tr>
@@ -31,7 +31,11 @@
                                     \Carbon\Carbon::parse($timeIncrement)->addMinutes(30), 
                                     \Carbon\Carbon::parse($timeIncrement)
                                 ))
-                                {{ $activity->activity_name }}
+                                {{ $activity->subject->subject_name }}
+                                <br>
+                                <small>
+                                    {{ $activity->activity_name }}
+                                </small>
                             @endif
                         @endforeach
 
