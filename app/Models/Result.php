@@ -38,7 +38,7 @@ class Result extends Model
     }
 
     // many to one relationsip with Subject model
-    public function activity() {
+    public function subject() {
         return $this->belongsTo(Subject::class);
     }
 }

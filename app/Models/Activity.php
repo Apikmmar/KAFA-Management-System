@@ -25,11 +25,6 @@ class Activity extends Model
         return $this->belongsTo(Classroom::class);
     }
 
-    // one to one relationship with Result model
-    public function result() {
-        return $this->hasOne(Result::class);
-    }
-
     // many to one relationship with Subject model
     public function subject() {
         return $this->belongsTo(Subject::class);

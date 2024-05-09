@@ -21,7 +21,7 @@ class Student extends Model
     ];
 
     // many to one relationsip with Classroom model
-    public function student() {
+    public function classroom() {
         return $this->belongsTo(Classroom::class, 'classroom_id', 'id');
     }
 
