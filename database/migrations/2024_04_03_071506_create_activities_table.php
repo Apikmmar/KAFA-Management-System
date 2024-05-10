@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('activities', function (Blueprint $table) {
             $table->id();
             $table->foreignId('classroom_id'); // class id of class that will be assign to the activity
+            $table->foreignId('subject_id'); // subject id
             $table->string('activity_name', 30); // activity name
             $table->string('activity_description', 100); // activity description
             $table->time('activity_starttime'); // activity start time

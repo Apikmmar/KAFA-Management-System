@@ -20,7 +20,7 @@ class Notice extends Model
     ];
 
     // many to one relationsip with User model
-    public function notices() {
+    public function user() {
         return $this->belongsTo(User::class);
     }
 }

@@ -5,19 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Examination extends Model
+class Subject extends Model
 {
     use HasFactory;
 
-    // allow to input
     protected $fillable = [
-        'exam_type',
-        'school_session',
-        'approval_status',
-        'exam_comment',
+        'subject_name',
+        'subject_description',
     ];
 
-    // one to many relationsip with Result model
+    public function activities() {
+        return $this->hasMany(Activity::class);
+    }
+
     public function results() {
         return $this->hasMany(Result::class);
     }

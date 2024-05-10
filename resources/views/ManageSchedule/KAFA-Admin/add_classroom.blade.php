@@ -50,9 +50,11 @@
                             <div class="col-md-6">
                                 <select id="class_teacher" name="class_teacher" class="form-select" aria-label="Default select example">
                                     <option selected value="null">Select</option>
+
                                 @foreach ($teachers as $teacher)
                                     <option value="{{ $teacher->id }}">{{ $teacher->user_name }}</option>
                                 @endforeach
+                                
                                 </select>
 
                                 @error('class_teacher')

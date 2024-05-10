@@ -13,7 +13,7 @@ class Result extends Model
     protected $fillable = [
         'student_id',
         'user_id',
-        'activity_id',
+        'subject_id',
         'examination_id',
         'result_marks',
         'result_feedback',
@@ -37,8 +37,8 @@ class Result extends Model
         return $this->belongsTo(Examination::class);
     }
 
-    // many to one relationsip with Activity model
-    public function activity() {
-        return $this->belongsTo(Activity::class);
+    // many to one relationsip with Subject model
+    public function subject() {
+        return $this->belongsTo(Subject::class);
     }
 }
