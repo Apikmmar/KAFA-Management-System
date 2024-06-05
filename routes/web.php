@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\BulletinController;
 use App\Http\Controllers\ScheduleController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -46,6 +47,8 @@ Route::group(['middleware' => 'role:2'], function () {
     Route::get('/add_classroom', [ScheduleController::class, 'addclassroom'])->name('addclassroom');
     Route::post('/add_classroom', [ScheduleController::class, 'createClassroom'])->name('addclassroom.create');
     Route::get('/view_classroom/{id}', [ScheduleController::class, 'viewclassroom'])->name('viewclassroom');
+
+    //Manage Bulletin
 });
 
 // Route for Parent
@@ -68,4 +71,9 @@ Route::group(['middleware' => 'role:4'], function () {
     Route::get('/activity_details/{id}', [ScheduleController::class, 'activitydetails'])->name('activitydetails');
     Route::put('/activity_details/{id}', [ScheduleController::class, 'UpdateClassactivity'])->name('activitydetails.update');
     Route::delete('/activity_details/{id}', [ScheduleController::class, 'deleteClassActivity'])->name('activitydetails.delete');
+
+    //Manage Bulletin
+    Route::get('/noticeform', [BulletinController::class, 'noticeform'])->name('noticeform');
+    Route::get('/allnotices', [BulletinController::class, 'allnotices'])->name('allnotices');
+    Route::post('/createnotice', [BulletinController::class, 'createnotice'])->name('createnotice');
 });
