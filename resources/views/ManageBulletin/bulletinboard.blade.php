@@ -6,8 +6,9 @@
     <br>
 
     <div class="container">
-        @foreach($notices as $notice)
-        <div class="row">
+    @foreach($notices as $notice)
+        @if($notice->notice_status == 'Approved')
+            <div class="row">
                 <div class="col">
                     <div style="border: 1px solid black; background-color: #f2f2f2; padding: 10px; margin-bottom: 10px;">
                         <div style="padding-left: 10px; padding-right: 10px; margin-top: 10px;">
@@ -25,7 +26,8 @@
                     </div>
                 </div>
             </div>
-        @endforeach
-        <br><br>  
+        @endif
+    @endforeach
+    <br><br>  
     </div>
 @endsection

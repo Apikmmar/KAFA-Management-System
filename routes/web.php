@@ -53,6 +53,8 @@ Route::group(['middleware' => 'role:2'], function () {
     Route::get('/view_classroom/{id}', [ScheduleController::class, 'viewclassroom'])->name('viewclassroom');
 
     //Manage Bulletin
+    Route::get('/formapproval/{id}', [BulletinController::class, 'formapproval'])->name('formapproval');
+    Route::put('/formapproval/{id}', [BulletinController::class, 'updatestatus'])->name('updatestatus');
 });
 
 // Route for Parent
@@ -75,10 +77,12 @@ Route::group(['middleware' => 'role:4'], function () {
     Route::get('/activity_details/{id}', [ScheduleController::class, 'activitydetails'])->name('activitydetails');
     Route::put('/activity_details/{id}', [ScheduleController::class, 'UpdateClassactivity'])->name('activitydetails.update');
     Route::delete('/activity_details/{id}', [ScheduleController::class, 'deleteClassActivity'])->name('activitydetails.delete');
+});
 
+Route::group(['middleware' => ['role:1,2,4']], function () {
     //Manage Bulletin
-    Route::get('/noticeform', [BulletinController::class, 'noticeform'])->name('noticeform');
     Route::get('/allnotices', [BulletinController::class, 'allnotices'])->name('allnotices');
+    Route::get('/noticeform', [BulletinController::class, 'noticeform'])->name('noticeform');
     Route::post('/createnotice', [BulletinController::class, 'createnotice'])->name('createnotice');
     Route::delete('/allnotices/{id}', [BulletinController::class, 'deletenotice'])->name('deletenotice');
 });

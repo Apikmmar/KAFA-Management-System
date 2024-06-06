@@ -23,19 +23,25 @@ class BulletinController extends Controller
     
     //Create notice
     public function createnotice(CreateNoticeRequest $request) {
-        $id = Auth::id();
+        $user = Auth::user();
+        $id = $user->id;
         $date = Date::now();
         // validate input request
         $data = $request->validated();
         
+        // Determine the notice status based on the user's role
+        $noticeStatus = ($user->role_id == 1 || $user->role_id == 2) ? 'Approved' : 'Pending';
+
+        // Create the notice with the determined status
         $class = Notice::create([
             'user_id' => $id,
             'notice_title' => $data['notice_title'],
             'notice_text' => $data['notice_text'],
             'notice_poster' => isset($path) ? $path : 'path',
             'notice_submission_date' => $date,
-            'notice_status' => "Pending",
+            'notice_status' => $noticeStatus,
         ]);
+
 
         if (request()->hasFile('notice_poster')) {
             $file = request()->file('notice_poster');
@@ -52,7 +58,7 @@ class BulletinController extends Controller
         $notice = Notice::findOrFail($id); //fetch notice based on the id
         $notice->delete(); // delete notice from database
 
-        return redirect()->route('allnotices')->with('deletemessage', 'Notice Successfully Deleted!');
+        return redirect()->route('allnotices')->with('message', 'Notice Successfully Deleted!');
     }
 
     //Display bulletin board
@@ -68,4 +74,34 @@ class BulletinController extends Controller
 
         return view('ManageBulletin.selected_notices', compact('notice', 'user'));
     }
+    
+    //Dislay selected notices for KAFA Admin to approve
+    public function formapproval($id) {
+        $notice = Notice::findOrFail($id); //fetch notice details based on the id
+        $user = $notice->user->user_name; // retrieve notice title and text associate with the user id 
+
+        return view('ManageBulletin.form_approval', compact('notice', 'user'));
+    }
+
+    //Approve notice
+    public function updatestatus(Request $request, $id) {
+        $notice = Notice::findOrFail($id);
+    
+        // Check the action parameter to determine whether to approve or reject
+        if ($request->action == 'Approve') {
+            $notice->notice_status = 'Approved'; // Set status to 'approved'
+            // Save the updated status
+            $notice->save();
+            // Redirect to the notices list with a success message
+            return redirect()->route('allnotices')->with('message', 'Notice Successfully Approved!');
+
+        } elseif ($request->action == 'Reject') {
+            $notice->notice_status = 'Rejected'; // Set status to 'rejected'
+            // Save the updated status
+            $notice->save();
+            // Redirect to the notices list with a success message
+            return redirect()->route('allnotices')->with('deletemessage', 'Notice Successfully Rejected!');
+        }
+    }
+    
 }
