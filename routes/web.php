@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\ResultController;
+use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -32,7 +34,12 @@ Route::middleware(['auth'])->group(function () {
 
 // Route for MUIP Admin
 Route::group(['middleware' => 'role:1'], function () {
-
+    // ManageReport
+    Route::get('/listSubject', [ReportController::class, 'listSubject'])->name('listSubject');
+    Route::get('/searchExam', [ReportController::class, 'searchExam'])->name('searchExam');
+    Route::get('/gradeReport', [ReportController::class, 'gradeReport'])->name('gradeReport');
+    Route::get('/listClass', [ReportController::class, 'listClass'])->name('listClass');
+    Route::get('/searchClass', [ReportController::class, 'searchClass'])->name('searchClass');
 });
 
 // Route for KAFA-Admin
@@ -46,6 +53,9 @@ Route::group(['middleware' => 'role:2'], function () {
     Route::get('/add_classroom', [ScheduleController::class, 'addclassroom'])->name('addclassroom');
     Route::post('/add_classroom', [ScheduleController::class, 'createClassroom'])->name('addclassroom.create');
     Route::get('/view_classroom/{id}', [ScheduleController::class, 'viewclassroom'])->name('viewclassroom');
+
+    // Manage Report
+    Route::get('/listFeedback', [ReportController::class, 'viewFeedback'])->name('listFeedback');
 });
 
 // Route for Parent
