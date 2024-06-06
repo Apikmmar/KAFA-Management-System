@@ -54,4 +54,18 @@ class BulletinController extends Controller
 
         return redirect()->route('allnotices')->with('deletemessage', 'Notice Successfully Deleted!');
     }
+
+    //Display bulletin board
+    public function bulletinboard() {
+        $notices = Notice::all(); // fetch all notices
+        return view('ManageBulletin.bulletinboard', compact('notices'));
+    }
+
+    //Dislay selected notices
+    public function selectednotices($id) {
+        $notice = Notice::findOrFail($id); //fetch notice details based on the id
+        $user = $notice->user->user_name; // retrieve notice title and text associate with the user id 
+
+        return view('ManageBulletin.selected_notices', compact('notice', 'user'));
+    }
 }

@@ -26,16 +26,16 @@
 
         <div class="container">
             <div class="row align-items-start">
-                <div class="col text-center d-flex align-items-center justify-content-center" style="border: 1px solid black; height: 40px;">
+                <div class="col text-center d-flex align-items-center justify-content-center" style="border: 1px solid black; height: 40px; background-color: #f2f2f2;">
                     Title
                 </div>
-                <div class="col text-center d-flex align-items-center justify-content-center" style="border: 1px solid black; height: 40px;">
+                <div class="col text-center d-flex align-items-center justify-content-center" style="border: 1px solid black; height: 40px; background-color: #f2f2f2;">
                     Apply Date
                 </div>
-                <div class="col text-center d-flex align-items-center justify-content-center" style="border: 1px solid black; height: 40px;">
+                <div class="col text-center d-flex align-items-center justify-content-center" style="border: 1px solid black; height: 40px; background-color: #f2f2f2;">
                     Status
                 </div>
-                <div class="col text-center d-flex align-items-center justify-content-center" style="border: 1px solid black; height: 40px;">
+                <div class="col text-center d-flex align-items-center justify-content-center" style="border: 1px solid black; height: 40px; background-color: #f2f2f2;">
                     Action
                 </div>
             </div>
@@ -43,16 +43,16 @@
 
             @foreach($notices as $notice)
                 <div class="row mb-3">
-                    <div class="col text-center d-flex align-items-center justify-content-center" style="border: 1px solid black; height: 40px;">
+                    <div class="col text-center d-flex align-items-center justify-content-center" style="border: 1px solid black; height: 40px; background-color: #f2f2f2;">
                         {{ $notice->notice_title }}
                     </div>
-                    <div class="col text-center d-flex align-items-center justify-content-center" style="border: 1px solid black; height: 40px;">
+                    <div class="col text-center d-flex align-items-center justify-content-center" style="border: 1px solid black; height: 40px; background-color: #f2f2f2;">
                         {{ \Carbon\Carbon::parse($notice->notice_submission_date)->format('Y-m-d') }}
                     </div>
-                    <div class="col text-center d-flex align-items-center justify-content-center" style="border: 1px solid black; height: 40px;">
+                    <div class="col text-center d-flex align-items-center justify-content-center" style="border: 1px solid black; height: 40px; background-color: #f2f2f2;">
                         {{ $notice->notice_status }}
                     </div>
-                    <div class="col text-center d-flex align-items-center justify-content-center" style="border: 1px solid black; height: 40px;">
+                    <div class="col text-center d-flex align-items-center justify-content-center" style="border: 1px solid black; height: 40px; background-color: #f2f2f2;">
                     <form action="{{ route('deletenotice', $notice->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this notice?');">
                         @csrf
                         @method('DELETE')

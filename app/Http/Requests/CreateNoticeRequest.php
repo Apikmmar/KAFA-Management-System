@@ -24,7 +24,7 @@ class CreateNoticeRequest extends FormRequest
         return [
             'notice_title'=>'required|string|max:50',
             'notice_text'=>'required|string|max:200',
-            'notice_poster'=>'nullable|mimes:pdf|max:10240',
+            'notice_poster'=>'nullable|mimes:jpg,png',
         ];
     }
 }

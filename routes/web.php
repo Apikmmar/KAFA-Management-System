@@ -29,6 +29,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/profile', [AccountController::class, 'profile'])->name('profile');
     Route::put('/profile/{id}', [AccountController::class, 'updateProfile'])->name('profile.update');
+
+    //Manage Bulletin
+    Route::get('/bulletinboard', [BulletinController::class, 'bulletinboard'])->name('bulletinboard');
+    Route::get('/selectednotices{id}',[BulletinController::class, 'selectednotices'])->name('selectednotices');
 });
 
 // Route for MUIP Admin

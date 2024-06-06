@@ -56,11 +56,12 @@
                 <a href="#" class="list-group-item btn {{ $btncolor }} btn-lg">KAFA Assessment</a>
                 <a href="#" class="list-group-item btn {{ $btncolor }} btn-lg">Report</a>
                 <a href="{{ route('allnotices') }}" class="list-group-item btn {{ $btncolor }} btn-lg">Notice</a>
+                
 
             @endif
 
             {{-- USE BY ALL USER --}}
-            <a href="#" class="list-group-item btn {{ $btncolor }} btn-lg">Bulletin Board</a>
+            <a href="{{ route('bulletinboard') }}" class="list-group-item btn {{ $btncolor }} btn-lg">Bulletin Board</a>
 
         </div>
     </div>
