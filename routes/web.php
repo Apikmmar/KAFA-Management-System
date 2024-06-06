@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\ResultController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -46,6 +47,11 @@ Route::group(['middleware' => 'role:2'], function () {
     Route::get('/add_classroom', [ScheduleController::class, 'addclassroom'])->name('addclassroom');
     Route::post('/add_classroom', [ScheduleController::class, 'createClassroom'])->name('addclassroom.create');
     Route::get('/view_classroom/{id}', [ScheduleController::class, 'viewclassroom'])->name('viewclassroom');
+
+    //Manage Result
+    Route::get('/add_session', [ResultController::class, 'addsession'])->name('addsession');
+    Route::post('/add_session', [ResultController::class, 'createsession'])->name('addsession.create');
+
 });
 
 // Route for Parent
@@ -68,4 +74,9 @@ Route::group(['middleware' => 'role:4'], function () {
     Route::get('/activity_details/{id}', [ScheduleController::class, 'activitydetails'])->name('activitydetails');
     Route::put('/activity_details/{id}', [ScheduleController::class, 'UpdateClassactivity'])->name('activitydetails.update');
     Route::delete('/activity_details/{id}', [ScheduleController::class, 'deleteClassActivity'])->name('activitydetails.delete');
+
+    //Manage Result
+    Route::get('/assessment_details', [ResultController::class, 'assessmentdetails'])->name('assessmentdetails');
+    // Route::post('/add_result', [ResultController::class, 'addresult'])->name('addresult.create');
+    // Route::put('/add_result/{id}', [ResultController::class, 'addresult'])->name('addresult.update');
 });
