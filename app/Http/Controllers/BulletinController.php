@@ -10,9 +10,10 @@ use Illuminate\Support\Facades\Date;
 
 class BulletinController extends Controller
 {
-    //Display notice form
+    //Display all notices
     public function allnotices() {
-        return view('ManageBulletin.all_notices');
+        $notices = Notice::all(); // fetch all notices
+        return view('ManageBulletin.all_notices', compact('notices'));
     }
     
     //Display notice form
@@ -44,5 +45,13 @@ class BulletinController extends Controller
             $class->save();
         }
         return redirect()->route('allnotices')->with('message', 'Notice Successfully Submitted!');
+    }
+
+    //Delete notice
+    public function deletenotice($id) {
+        $notice = Notice::findOrFail($id); //fetch notice based on the id
+        $notice->delete(); // delete notice from database
+
+        return redirect()->route('allnotices')->with('deletemessage', 'Notice Successfully Deleted!');
     }
 }

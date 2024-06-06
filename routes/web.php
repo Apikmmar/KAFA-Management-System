@@ -76,4 +76,5 @@ Route::group(['middleware' => 'role:4'], function () {
     Route::get('/noticeform', [BulletinController::class, 'noticeform'])->name('noticeform');
     Route::get('/allnotices', [BulletinController::class, 'allnotices'])->name('allnotices');
     Route::post('/createnotice', [BulletinController::class, 'createnotice'])->name('createnotice');
+    Route::delete('/allnotices/{id}', [BulletinController::class, 'deletenotice'])->name('deletenotice');
 });
