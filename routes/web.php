@@ -49,8 +49,13 @@ Route::group(['middleware' => 'role:2'], function () {
     Route::get('/view_classroom/{id}', [ScheduleController::class, 'viewclassroom'])->name('viewclassroom');
 
     //Manage Result
-    Route::get('/add_session', [ResultController::class, 'addsession'])->name('addsession');
-    Route::post('/add_session', [ResultController::class, 'createsession'])->name('addsession.create');
+    Route::get('/add_session', [ResultController::class, 'addSession'])->name('addsession');
+    Route::post('/add_session', [ResultController::class, 'storeSession'])->name('storeSession');
+    Route::delete('/add_session/{id}', [ResultController::class, 'deletesession'])->name('deletesession');
+    Route::get('/result_approval_list', [ResultController::class, 'resultapprovallist'])->name('resultapprovallist');
+    // Route::get('/result-submission-approval/{id}/view', [ResultController::class, 'viewresult'])->name('viewresult');
+    // Route::post('/result-submission-approval/{id}/approve', [ResultController::class, 'updateapproval'])->name('updateapproval');
+    // Route::post('/result-submission-approval/{id}/reject', [ResultController::class, 'rejectapproval'])->name('rejectapproval');
 
 });
 
@@ -77,6 +82,7 @@ Route::group(['middleware' => 'role:4'], function () {
 
     //Manage Result
     Route::get('/assessment_details', [ResultController::class, 'assessmentdetails'])->name('assessmentdetails');
-    // Route::post('/add_result', [ResultController::class, 'addresult'])->name('addresult.create');
+    Route::get('/add_result/{assessid}', [ResultController::class, 'displayResult'])->name('displayResult');
+    Route::post('/add_result/{assessid}', [ResultController::class, 'addResult'])->name('addResult');
     // Route::put('/add_result/{id}', [ResultController::class, 'addresult'])->name('addresult.update');
 });

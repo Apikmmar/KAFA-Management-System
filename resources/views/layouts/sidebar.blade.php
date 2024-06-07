@@ -11,13 +11,13 @@
     if ($isMUIPAdmin) {
         $btncolor = 'btn-danger';
         $activeColor = $btncolor . ' active';
-    } elseif($isKAFAAdmin) {
+    } elseif ($isKAFAAdmin) {
         $btncolor = 'btn-primary';
         $activeColor = $btncolor . ' active';
-    } elseif($isParent) {
+    } elseif ($isParent) {
         $btncolor = 'btn-warning';
         $activeColor = $btncolor . ' active';
-    } elseif($isTeacher) {
+    } elseif ($isTeacher) {
         $btncolor = 'btn-success';
         $activeColor = $btncolor . ' active';
     }
@@ -42,7 +42,8 @@
                 <a href="{{ route('allclass') }}" class="list-group-item btn {{ $btncolor }} btn-lg">All Class</a>
                 <a href="#" class="list-group-item btn {{ $btncolor }} btn-lg">Report</a>
                 <a href="#" class="list-group-item btn {{ $btncolor }} btn-lg">Notice</a>
-                <a href="{{ route('addsession') }}" class="list-group-item btn {{ $btncolor }} btn-lg">Result</a>
+                <a href="{{ route('resultapprovallist') }}" class="list-group-item btn {{ $btncolor }} btn-lg">Result</a>
+                <a href="{{ route('addsession') }}" class="list-group-item btn {{ $btncolor }} btn-lg">Create Session</a>
 
             @elseif($isParent)
                 {{-- Parent --}}
