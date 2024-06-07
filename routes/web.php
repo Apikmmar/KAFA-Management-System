@@ -36,10 +36,13 @@ Route::middleware(['auth'])->group(function () {
 Route::group(['middleware' => 'role:1'], function () {
     // ManageReport
     Route::get('/listSubject', [ReportController::class, 'listSubject'])->name('listSubject');
-    Route::get('/searchExam', [ReportController::class, 'searchExam'])->name('searchExam');
+    Route::get('/searchExam/{id}', [ReportController::class, 'searchExam'])->name('searchExam');
     Route::get('/gradeReport', [ReportController::class, 'gradeReport'])->name('gradeReport');
     Route::get('/listClass', [ReportController::class, 'listClass'])->name('listClass');
     Route::get('/searchClass', [ReportController::class, 'searchClass'])->name('searchClass');
+    Route::get('/subjectReport', [ReportController::class, 'subjectReport'])->name('subjectReport');
+    Route::get('/addFeedback', [ReportController::class, 'addFeedback'])->name('addFeedback');
+    
 });
 
 // Route for KAFA-Admin

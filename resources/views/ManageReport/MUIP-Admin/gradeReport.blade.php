@@ -2,57 +2,34 @@
 
 @section('content')
     <div>
+        <canvas id="gradesChart" width="200" height="200"></canvas>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                // Bar chart
-                new Chart(document.getElementById("chartjs-bar"), {
-                    type: "bar",
-                    data: {
-                        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                        datasets: [{
-                            label: "Last year",
-                            backgroundColor: window.theme.primary,
-                            borderColor: window.theme.primary,
-                            hoverBackgroundColor: window.theme.primary,
-                            hoverBorderColor: window.theme.primary,
-                            data: [54, 67, 41, 55, 62, 45, 55, 73, 60, 76, 48, 79],
-                            barPercentage: .75,
-                            categoryPercentage: .5
-                        }, {
-                            label: "This year",
-                            backgroundColor: "#E8EAED",
-                            borderColor: "#E8EAED",
-                            hoverBackgroundColor: "#E8EAED",
-                            hoverBorderColor: "#E8EAED",
-                            data: [69, 66, 24, 48, 52, 51, 44, 53, 62, 79, 51, 68],
-                            barPercentage: .75,
-                            categoryPercentage: .5
-                        }]
-                    },
-                    options: {
-                        maintainAspectRatio: false,
-                        legend: {
-                            display: false
-                        },
-                        scales: {
-                            yAxes: [{
-                                gridLines: {
-                                    display: false
-                                },
-                                stacked: false,
-                                ticks: {
-                                    stepSize: 20
-                                }
-                            }],
-                            xAxes: [{
-                                stacked: false,
-                                gridLines: {
-                                    color: "transparent"
-                                }
-                            }]
+            const ctx = document.getElementById('gradesChart').getContext('2d');
+            const chartData = @json($chartData);
+            
+            const labels = chartData.labels;
+            const data = chartData.data;
+
+            const chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Total',
+                        data: data,
+                        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
                         }
                     }
-                });
+                }
             });
         </script>
     </div>

@@ -18,91 +18,16 @@
                     </thead>
 
                     <tbody>
+                    @foreach ($subjects as $subject)
                         <tr>
-                            <td>Al-Quran</td>
+                            <td>{{ $subject->subject_name }}</td>
                             <td class="text-end">
-                                {{-- <a href="#"><i class="align-middle fas fa-fw fa-eye"></i></i></a> --}}
-                                <a href="{{route('searchExam')}}" class="btn btn-primary btn-sm">
+                                <a href="{{route('searchExam', ['id' => $subject->id])}}" class="btn btn-primary btn-sm">
                                     {{ __('View') }}
                                 </a>
                             </td>
                         </tr>
-
-                        <tr>
-                            <td>Bidang Al Quran</td>
-                            <td class="text-end">
-                                {{-- <a href="#"><i class="align-middle fas fa-fw fa-eye"></i></i></a> --}}
-                                <a href="{{route('searchExam')}}" class="btn btn-primary btn-sm">
-                                    {{ __('View') }}
-                                </a>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Ulum Syariah</td>
-                            <td class="text-end">
-                                {{-- <a href="#"><i class="align-middle fas fa-fw fa-eye"></i></i></a> --}}
-                                <a href="{{route('searchExam')}}" class="btn btn-primary btn-sm">
-                                    {{ __('View') }}
-                                </a>
-                            </td>
-                        </tr>
-
-                        <tr>
-                           <td>Sirah</td>
-                            <td class="text-end">
-                                {{-- <a href="#"><i class="align-middle fas fa-fw fa-eye"></i></i></a> --}}
-                                <a href="{{route('searchExam')}}" class="btn btn-primary btn-sm">
-                                    {{ __('View') }}
-                                </a>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Adab</td>
-                            <td class="text-end">
-                                {{-- <a href="#"><i class="align-middle fas fa-fw fa-eye"></i></i></a> --}}
-                                <a href="{{route('searchExam')}}" class="btn btn-primary btn-sm">                                    {{ __('View') }}
-                                </a>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Jawi dan Khat</td>
-                            <td class="text-end">
-                                {{-- <a href="#"><i class="align-middle fas fa-fw fa-eye"></i></i></a> --}}
-                                <a href="{{route('searchExam')}}" class="btn btn-primary btn-sm">                                    {{ __('View') }}
-                                </a>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Lughatul Quran</td>
-                            <td class="text-end">
-                                {{-- <a href="#"><i class="align-middle fas fa-fw fa-eye"></i></i></a> --}}
-                                <a href="{{route('searchExam')}}" class="btn btn-primary btn-sm">                                    {{ __('View') }}
-                                </a>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Penghayatan Cara Hidup Islam</td>
-                            <td class="text-end">
-                                {{-- <a href="#"><i class="align-middle fas fa-fw fa-eye"></i></i></a> --}}
-                                <a href="{{route('searchExam')}}" class="btn btn-primary btn-sm">                                    {{ __('View') }}
-                                </a>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Amali Solat</td>
-                            <td class="text-end">
-                                <a href="#"><i class="align-middle fas fa-fw fa-eye"></i></i></a>
-                                <a href="{{route('searchExam')}}" class="btn btn-primary btn-sm">
-                                    {{ __('View') }}
-                                </a>
-                            </td>
-                        </tr>
+                    @endforeach
                     </tbody>
                 </table>
 
