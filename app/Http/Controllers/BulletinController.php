@@ -16,11 +16,11 @@ class BulletinController extends Controller
         $status = $request->notice_status;
 
         if ($status === 'Pending' || $status === 'Approved' || $status === 'Rejected') {
-            $notices = Notice::where('notice_status', $status)->get();
+            $notices = Notice::where('notice_status', $status)->where('user_id', Auth::id())->get();
 
             return view('ManageBulletin.all_notices', compact('notices', 'status'));
         } else {
-            $notices = Notice::all(); // fetch all notices
+            $notices = Notice::where('user_id', Auth::id())->get(); // fetch all notices
 
             $status = "null";
 
