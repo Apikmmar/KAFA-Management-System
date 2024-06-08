@@ -32,12 +32,11 @@ Route::middleware(['auth'])->group(function () {
 
     //Manage Bulletin
     Route::get('/bulletinboard', [BulletinController::class, 'bulletinboard'])->name('bulletinboard');
-    Route::get('/selectednotices{id}',[BulletinController::class, 'selectednotices'])->name('selectednotices');
+    Route::get('/selectednotices{id}', [BulletinController::class, 'selectednotices'])->name('selectednotices');
 });
 
 // Route for MUIP Admin
 Route::group(['middleware' => 'role:1'], function () {
-
 });
 
 // Route for KAFA-Admin

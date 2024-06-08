@@ -11,7 +11,7 @@
                     <div style="margin-top: 10px;">
                         {{ $notice->notice_text }}
                     </div>
-                    
+
                     @if ($notice->notice_poster!='path')
                     <div style="margin-top: 10px;">
                         <img src="{{ asset('storage/' . $notice->notice_poster) }}" alt="Notice Poster" style="max-width: 100%;">

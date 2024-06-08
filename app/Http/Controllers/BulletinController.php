@@ -11,24 +11,39 @@ use Illuminate\Support\Facades\Date;
 class BulletinController extends Controller
 {
     //Display all notices
-    public function allnotices() {
-        $notices = Notice::all(); // fetch all notices
-        return view('ManageBulletin.all_notices', compact('notices'));
+    public function allnotices(Request $request)
+    {
+        $status = $request->notice_status;
+
+        if ($status === 'Pending' || $status === 'Approved' || $status === 'Rejected') {
+            $notices = Notice::where('notice_status', $status)->get();
+
+            return view('ManageBulletin.all_notices', compact('notices', 'status'));
+        } else {
+            $notices = Notice::all(); // fetch all notices
+
+            $status = "null";
+
+            return view('ManageBulletin.all_notices', compact('notices', 'status'));
+        }
     }
-    
+
+
     //Display notice form
-    public function noticeform() {
+    public function noticeform()
+    {
         return view('ManageBulletin.notice_form');
     }
-    
+
     //Create notice
-    public function createnotice(CreateNoticeRequest $request) {
+    public function createnotice(CreateNoticeRequest $request)
+    {
         $user = Auth::user();
         $id = $user->id;
         $date = Date::now();
         // validate input request
         $data = $request->validated();
-        
+
         // Determine the notice status based on the user's role
         $noticeStatus = ($user->role_id == 1 || $user->role_id == 2) ? 'Approved' : 'Pending';
 
@@ -54,7 +69,8 @@ class BulletinController extends Controller
     }
 
     //Delete notice
-    public function deletenotice($id) {
+    public function deletenotice($id)
+    {
         $notice = Notice::findOrFail($id); //fetch notice based on the id
         $notice->delete(); // delete notice from database
 
@@ -62,21 +78,24 @@ class BulletinController extends Controller
     }
 
     //Display bulletin board
-    public function bulletinboard() {
+    public function bulletinboard()
+    {
         $notices = Notice::all(); // fetch all notices
         return view('ManageBulletin.bulletinboard', compact('notices'));
     }
 
     //Dislay selected notices
-    public function selectednotices($id) {
+    public function selectednotices($id)
+    {
         $notice = Notice::findOrFail($id); //fetch notice details based on the id
         $user = $notice->user->user_name; // retrieve notice title and text associate with the user id 
 
         return view('ManageBulletin.selected_notices', compact('notice', 'user'));
     }
-    
+
     //Dislay selected notices for KAFA Admin to approve
-    public function formapproval($id) {
+    public function formapproval($id)
+    {
         $notice = Notice::findOrFail($id); //fetch notice details based on the id
         $user = $notice->user->user_name; // retrieve notice title and text associate with the user id 
 
@@ -84,9 +103,10 @@ class BulletinController extends Controller
     }
 
     //Approve notice
-    public function updatestatus(Request $request, $id) {
+    public function updatestatus(Request $request, $id)
+    {
         $notice = Notice::findOrFail($id);
-    
+
         // Check the action parameter to determine whether to approve or reject
         if ($request->action == 'Approve') {
             $notice->notice_status = 'Approved'; // Set status to 'approved'
@@ -94,14 +114,12 @@ class BulletinController extends Controller
             $notice->save();
             // Redirect to the notices list with a success message
             return redirect()->route('allnotices')->with('message', 'Notice Successfully Approved!');
-
         } elseif ($request->action == 'Reject') {
             $notice->notice_status = 'Rejected'; // Set status to 'rejected'
             // Save the updated status
             $notice->save();
             // Redirect to the notices list with a success message
-            return redirect()->route('allnotices')->with('deletemessage', 'Notice Successfully Rejected!');
+            return redirect()->route('allnotices')->with('message', 'Notice Successfully Rejected!');
         }
     }
-    
 }
