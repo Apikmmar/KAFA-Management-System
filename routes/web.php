@@ -38,12 +38,12 @@ Route::group(['middleware' => 'role:1'], function () {
     Route::get('/listSubject', [ReportController::class, 'listSubject'])->name('listSubject');
     Route::get('/searchExam/{id}', [ReportController::class, 'searchExam'])->name('searchExam');
     Route::get('/gradeReport', [ReportController::class, 'gradeReport'])->name('gradeReport');
-    Route::get('/listClass', [ReportController::class, 'listClass'])->name('listClass');
-    Route::get('/searchClass', [ReportController::class, 'searchClass'])->name('searchClass');
-    Route::get('/subjectReport', [ReportController::class, 'subjectReport'])->name('subjectReport');
+    Route::get('/infoReport', [ReportController::class, 'infoReport'])->name('infoReport');
+    Route::get('/classReport', [ReportController::class, 'classReport'])->name('classReport');
     Route::get('/addFeedback', [ReportController::class, 'addFeedback'])->name('addFeedback');
-    
-});
+    Route::post('/addFeedback', [ReportController::class, 'saveFeedback'])->name('saveFeedback');
+    Route::delete('/deleteFeedback/{id}', [ReportController::class, 'deleteFeedback'])->name('deleteFeedback');
+    });
 
 // Route for KAFA-Admin
 Route::group(['middleware' => 'role:2'], function () {
@@ -56,9 +56,6 @@ Route::group(['middleware' => 'role:2'], function () {
     Route::get('/add_classroom', [ScheduleController::class, 'addclassroom'])->name('addclassroom');
     Route::post('/add_classroom', [ScheduleController::class, 'createClassroom'])->name('addclassroom.create');
     Route::get('/view_classroom/{id}', [ScheduleController::class, 'viewclassroom'])->name('viewclassroom');
-
-    // Manage Report
-    Route::get('/listFeedback', [ReportController::class, 'viewFeedback'])->name('listFeedback');
 });
 
 // Route for Parent
@@ -81,4 +78,9 @@ Route::group(['middleware' => 'role:4'], function () {
     Route::get('/activity_details/{id}', [ScheduleController::class, 'activitydetails'])->name('activitydetails');
     Route::put('/activity_details/{id}', [ScheduleController::class, 'UpdateClassactivity'])->name('activitydetails.update');
     Route::delete('/activity_details/{id}', [ScheduleController::class, 'deleteClassActivity'])->name('activitydetails.delete');
+});
+
+Route::group(['middleware' => 'role:1,2'], function () {
+    // Manage Report
+    Route::get('/listFeedback', [ReportController::class, 'listFeedback'])->name('listFeedback');
 });

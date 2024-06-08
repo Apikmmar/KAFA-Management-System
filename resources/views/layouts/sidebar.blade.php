@@ -34,9 +34,7 @@
             @if ($isMUIPAdmin)
                 {{-- MUIP Admin --}}
                 <a href="{{ route('listSubject') }}" class="list-group-item btn {{ $btncolor }} btn-lg">Report Subject</a>
-                <a href="{{ route('listClass') }}" class="list-group-item btn {{ $btncolor }} btn-lg">Report Class</a>
-                <a href="{{ route('addFeedback') }}" class="list-group-item btn {{ $btncolor }} btn-lg">Feedback</a>
-
+                <a href="{{ route('infoReport') }}" class="list-group-item btn {{ $btncolor }} btn-lg">Report Class</a>
                 {{-- <a href="{{ route('searchExam') }}" class="list-group-item btn {{ $btncolor }} btn-lg">Report</a> --}}
                 <a href="#" class="list-group-item btn {{ $btncolor }} btn-lg">Notice</a>
                 

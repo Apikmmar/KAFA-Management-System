@@ -1,9 +1,9 @@
+
 @extends('layouts.master')
 
 @section('content')
     <div>
-        <form action="{{route('subjectReport')}}" method="get">
-            <input type="hidden" value="{{ $subject->id }}" name="subject">
+        <form action="{{route('classReport')}}" method="get">
 
             <div class="mb-3 error-placeholder">
                 <select id="validation-select" class="form-select" style="width: 400px;" name="exam_id">
@@ -14,14 +14,14 @@
                 </select>
             </div>
     
-            {{-- <div class="mb-3 error-placeholder">
+            <div class="mb-3 error-placeholder">
                 <select class="form-select" style="width: 400px;" name="class">
                     <option value>Class</option>
                     @foreach ($classes as $class)
                         <option value="{{$class->id}}">{{ $class->class_name }}</option>
                     @endforeach
                 </select>
-            </div> --}}
+            </div>
     
             <div class="mb-3 d-flex justify-content-left">
                 <button type="submit" class="btn btn-primary">
@@ -29,9 +29,7 @@
                 </button>
             </div>
         </form>
-
-                                    
-
-
     </div>
 @endsection
+
+   

@@ -26,11 +26,16 @@
                                     {{ __('View') }}
                                 </a>
                             </td>
+                            
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
-
+                <div class="text-center">
+                    <a href="{{ route('listFeedback') }}" class="btn btn-primary btn-sm">
+                        {{ __('Feedback') }}
+                    </a>
+                </div>
 
             </div>
         </div>
