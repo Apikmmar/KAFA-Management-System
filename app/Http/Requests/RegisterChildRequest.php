@@ -24,7 +24,7 @@ class RegisterChildRequest extends FormRequest
         return [
             'child_ic' => 'required|string|size:12',
             'child_name' => 'required|string|max:255',
-            'child_age' => 'required|numeric|digits_between:1,255',
+            'child_age' => 'required',
             'child_gender' => 'required|string|in:Men,Women!max:255',
             'child_verification' => 'required|mimes:pdf|max:10240',
         ];

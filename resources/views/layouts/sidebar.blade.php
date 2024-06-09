@@ -49,8 +49,8 @@
                 {{-- Parent --}}
                 <a href="{{ route('registerchild') }}" class="list-group-item btn {{ $btncolor }} btn-lg">Register Child</a>
                 <a href="{{ route('childkafa') }}" class="list-group-item btn {{ $btncolor }} btn-lg">Child Activity</a>
-                <a href="{{ route('') }}" class="list-group-item btn {{ $btncolor }} btn-lg">Result</a>
-
+                <a href="{{ route('selectresultinfo') }}" class="list-group-item btn {{ $btncolor }} btn-lg">Result</a>
+                
             @elseif($isTeacher)
                 {{-- Teacher --}}
                 <a href="{{ route('classactivity') }}" class="list-group-item btn {{ $btncolor }} btn-lg">Manage Class</a>

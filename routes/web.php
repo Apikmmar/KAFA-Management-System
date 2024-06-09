@@ -53,9 +53,12 @@ Route::group(['middleware' => 'role:2'], function () {
     Route::post('/add_session', [ResultController::class, 'storeSession'])->name('storeSession');
     Route::delete('/add_session/{id}', [ResultController::class, 'deletesession'])->name('deletesession');
     Route::get('/result_approval_list', [ResultController::class, 'resultapprovallist'])->name('resultapprovallist');
-    // Route::get('/result-submission-approval/{id}/view', [ResultController::class, 'viewresult'])->name('viewresult');
-    // Route::post('/result-submission-approval/{id}/approve', [ResultController::class, 'updateapproval'])->name('updateapproval');
-    // Route::post('/result-submission-approval/{id}/reject', [ResultController::class, 'rejectapproval'])->name('rejectapproval');
+
+
+    Route::get('/studentlistreview/{result_id}', [ResultController::class, 'studentListReview'])->name('studentlistreview');
+    // Route to handle result approval/rejection
+    Route::post('/updateapproval', [ResultController::class, 'updateApproval'])->name('updateapproval');
+    Route::post('/deleteapproval', [ResultController::class, 'deleteapproval'])->name('deleteapproval');
 
 });
 
@@ -68,6 +71,10 @@ Route::group(['middleware' => 'role:3'], function () {
     // Manage Schedule
     Route::get('/child_kafa', [ScheduleController::class, 'childkafa'])->name('childkafa');
     Route::get('/kafa_schedule/{id}', [ScheduleController::class, 'kafaschedule'])->name('kafaschedule');
+
+    //Manage Result
+    Route::get('/select_result_info', [ResultController::class, 'selectresultinfo'])->name('selectresultinfo');
+    Route::get('/resultslip', [ResultController::class, 'resultslip'])->name('resultslip');
 });
 
 // Route for Teacher
@@ -84,5 +91,9 @@ Route::group(['middleware' => 'role:4'], function () {
     Route::get('/assessment_details', [ResultController::class, 'assessmentdetails'])->name('assessmentdetails');
     Route::get('/add_result/{assessid}', [ResultController::class, 'displayResult'])->name('displayResult');
     Route::post('/add_result/{assessid}', [ResultController::class, 'addResult'])->name('addResult');
-    // Route::put('/add_result/{id}', [ResultController::class, 'addresult'])->name('addresult.update');
+    // Route::post('/updateResult/{assessid}/{studentid}', [ResultController::class, 'updateResult'])->name('updateResult');
+
+    Route::get('/editResult/{assessid}', [ResultController::class, 'updateResult'])->name('updateResult');
+    Route::put('/editResult/{assessid}', [ResultController::class, 'editResult'])->name('editResult');
+    // Route::post('/updateResult/{assessid}/{studentid}', [ResultController::class, 'updateResult'])->name('updateResult');
 });

@@ -13,7 +13,7 @@
         <div class="row justify-content-center mt-3 mb-3">
             <div class="col-md-8">
                 <div>
-                    <form method="POST" action="" enctype="multipart/form-data">
+                    <form method="POST" action="{{route('registerchild.create')}}" enctype="multipart/form-data">
                         @csrf
 
                         <div class="row mb-3">

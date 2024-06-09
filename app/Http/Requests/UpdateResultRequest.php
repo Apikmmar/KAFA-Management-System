@@ -11,7 +11,7 @@ class UpdateResultRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,9 +22,8 @@ class UpdateResultRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'result_grades' => 'required|string',
-            'result_feedback' => 'nullable|string',
-            'approval_status' => 'required|string'
+            'result_marks.*' => 'required|numeric|min:0|max:100',
+            'result_feedback.*' => 'required|string|max:50',
         ];
     }
 }
