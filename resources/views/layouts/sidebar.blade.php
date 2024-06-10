@@ -33,15 +33,17 @@
 
             @if ($isMUIPAdmin)
                 {{-- MUIP Admin --}}
-                <a href="#" class="list-group-item btn {{ $btncolor }} btn-lg">Report</a>
+                <a href="{{ route('listSubject') }}" class="list-group-item btn {{ $btncolor }} btn-lg">Report Subject</a>
+                <a href="{{ route('infoReport') }}" class="list-group-item btn {{ $btncolor }} btn-lg">Report Class</a>
+                {{-- <a href="{{ route('searchExam') }}" class="list-group-item btn {{ $btncolor }} btn-lg">Report</a> --}}
                 <a href="#" class="list-group-item btn {{ $btncolor }} btn-lg">Notice</a>
+                
 
             @elseif($isKAFAAdmin)
                 {{-- KAFA Admin --}}
                 <a href="{{ route('registerteacher') }}" class="list-group-item btn {{ $btncolor }} btn-lg">Add Teacher</a>
                 <a href="{{ route('allclass') }}" class="list-group-item btn {{ $btncolor }} btn-lg">All Class</a>
-                <a href="#" class="list-group-item btn {{ $btncolor }} btn-lg">Report</a>
-                <a href="#" class="list-group-item btn {{ $btncolor }} btn-lg">Notice</a>
+                <a href="{{ route('listFeedback') }}" class="list-group-item btn {{ $btncolor }} btn-lg">Report</a>
                 <a href="{{ route('resultapprovallist') }}" class="list-group-item btn {{ $btncolor }} btn-lg">Result</a>
                 <a href="{{ route('addsession') }}" class="list-group-item btn {{ $btncolor }} btn-lg">Create Session</a>
 

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\ResultController;
+use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -33,8 +34,16 @@ Route::middleware(['auth'])->group(function () {
 
 // Route for MUIP Admin
 Route::group(['middleware' => 'role:1'], function () {
-
-});
+    // ManageReport
+    Route::get('/listSubject', [ReportController::class, 'listSubject'])->name('listSubject');
+    Route::get('/searchExam/{id}', [ReportController::class, 'searchExam'])->name('searchExam');
+    Route::get('/gradeReport', [ReportController::class, 'gradeReport'])->name('gradeReport');
+    Route::get('/infoReport', [ReportController::class, 'infoReport'])->name('infoReport');
+    Route::get('/classReport', [ReportController::class, 'classReport'])->name('classReport');
+    Route::get('/addFeedback', [ReportController::class, 'addFeedback'])->name('addFeedback');
+    Route::post('/addFeedback', [ReportController::class, 'saveFeedback'])->name('saveFeedback');
+    Route::delete('/deleteFeedback/{id}', [ReportController::class, 'deleteFeedback'])->name('deleteFeedback');
+    });
 
 // Route for KAFA-Admin
 Route::group(['middleware' => 'role:2'], function () {
@@ -86,6 +95,12 @@ Route::group(['middleware' => 'role:4'], function () {
     Route::get('/activity_details/{id}', [ScheduleController::class, 'activitydetails'])->name('activitydetails');
     Route::put('/activity_details/{id}', [ScheduleController::class, 'UpdateClassactivity'])->name('activitydetails.update');
     Route::delete('/activity_details/{id}', [ScheduleController::class, 'deleteClassActivity'])->name('activitydetails.delete');
+
+});
+
+Route::group(['middleware' => 'role:1,2'], function () {
+    // Manage Report
+    Route::get('/listFeedback', [ReportController::class, 'listFeedback'])->name('listFeedback');
 
     //Manage Result
     Route::get('/assessment_details', [ResultController::class, 'assessmentdetails'])->name('assessmentdetails');
