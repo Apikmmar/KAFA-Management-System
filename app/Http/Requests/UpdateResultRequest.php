@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RegisterChildRequest extends FormRequest
+class UpdateResultRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -16,17 +16,14 @@ class RegisterChildRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
-     * Rules is the format that apply for the register child request
+     *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
         return [
-            'child_ic' => 'required|string|size:12',
-            'child_name' => 'required|string|max:255',
-            'child_age' => 'required',
-            'child_gender' => 'required|string|in:Men,Women!max:255',
-            'child_verification' => 'required|mimes:pdf|max:10240',
+            'result_marks.*' => 'required|numeric|min:0|max:100',
+            'result_feedback.*' => 'required|string|max:50',
         ];
     }
 }
