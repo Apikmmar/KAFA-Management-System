@@ -62,7 +62,6 @@ Route::group(['middleware' => 'role:2'], function () {
     Route::post('/add_classroom', [ScheduleController::class, 'createClassroom'])->name('addclassroom.create');
     Route::get('/view_classroom/{id}', [ScheduleController::class, 'viewclassroom'])->name('viewclassroom');
 
-
     //Manage Bulletin
     Route::get('/formapproval/{id}', [BulletinController::class, 'formapproval'])->name('formapproval');
     Route::put('/formapproval/{id}', [BulletinController::class, 'updatestatus'])->name('updatestatus');
@@ -72,16 +71,14 @@ Route::group(['middleware' => 'role:2'], function () {
     Route::post('/add_session', [ResultController::class, 'storeSession'])->name('storeSession');
     Route::delete('/add_session/{id}', [ResultController::class, 'deletesession'])->name('deletesession');
     Route::get('/result_approval_list', [ResultController::class, 'resultapprovallist'])->name('resultapprovallist');
-
     Route::get('/studentlistreview/{result_id}', [ResultController::class, 'studentListReview'])->name('studentlistreview');
-    // Route to handle result approval/rejection
     Route::post('/updateapproval', [ResultController::class, 'updateApproval'])->name('updateapproval');
     Route::post('/deleteapproval', [ResultController::class, 'deleteapproval'])->name('deleteapproval');
 });
 
 // Route for Parent
 Route::group(['middleware' => 'role:3'], function () {
-    // Manafe Account
+    // Manage Account
     Route::get('/registerchild', [AccountController::class, 'registerchild'])->name('registerchild');
     Route::post('/registerchild', [AccountController::class, 'createchild'])->name('registerchild.create');
 
@@ -104,6 +101,12 @@ Route::group(['middleware' => 'role:4'], function () {
     Route::put('/activity_details/{id}', [ScheduleController::class, 'UpdateClassactivity'])->name('activitydetails.update');
     Route::delete('/activity_details/{id}', [ScheduleController::class, 'deleteClassActivity'])->name('activitydetails.delete');
 
+    // Manage Result
+    Route::get('/assessment_details', [ResultController::class, 'assessmentdetails'])->name('assessmentdetails');
+    Route::get('/add_result/{assessid}', [ResultController::class, 'displayResult'])->name('displayResult');
+    Route::post('/add_result/{assessid}', [ResultController::class, 'addResult'])->name('addResult');
+    Route::get('/editResult/{assessid}', [ResultController::class, 'updateResult'])->name('updateResult');
+    Route::put('/editResult/{assessid}', [ResultController::class, 'editResult'])->name('editResult');
 });
 
 Route::group(['middleware' => ['role:1,2,4']], function () {
@@ -118,15 +121,5 @@ Route::group(['middleware' => ['role:1,2,4']], function () {
 Route::group(['middleware' => 'role:1,2'], function () {
     // Manage Report
     Route::get('/listFeedback', [ReportController::class, 'listFeedback'])->name('listFeedback');
-
-    //Manage Result
-    Route::get('/assessment_details', [ResultController::class, 'assessmentdetails'])->name('assessmentdetails');
-    Route::get('/add_result/{assessid}', [ResultController::class, 'displayResult'])->name('displayResult');
-    Route::post('/add_result/{assessid}', [ResultController::class, 'addResult'])->name('addResult');
-    // Route::post('/updateResult/{assessid}/{studentid}', [ResultController::class, 'updateResult'])->name('updateResult');
-
-    Route::get('/editResult/{assessid}', [ResultController::class, 'updateResult'])->name('updateResult');
-    Route::put('/editResult/{assessid}', [ResultController::class, 'editResult'])->name('editResult');
-    // Route::post('/updateResult/{assessid}/{studentid}', [ResultController::class, 'updateResult'])->name('updateResult');
 });
 

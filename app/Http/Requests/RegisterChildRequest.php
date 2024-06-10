@@ -25,7 +25,7 @@ class RegisterChildRequest extends FormRequest
             'child_ic' => 'required|string|size:12',
             'child_name' => 'required|string|max:255',
             'child_age' => 'required',
-            'child_gender' => 'required|string|in:Men,Women!max:255',
+            'child_gender' => 'required|string|in:Men,Women',
             'child_verification' => 'required|mimes:pdf|max:10240',
         ];
     }

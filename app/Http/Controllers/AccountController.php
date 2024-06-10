@@ -109,6 +109,7 @@ class AccountController extends Controller
         // create child
         $child = Student::create([
             'student_ic' => $data['child_ic'],
+            'classroom_id' => null,
             'parent_id' => $parent->id,
             'student_name' => $data['child_name'],
             'student_age' => (int) $data['child_age'],
