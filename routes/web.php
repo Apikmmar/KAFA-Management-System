@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\BulletinController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\ResultController;
 use App\Http\Controllers\ReportController;
@@ -30,6 +31,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/profile', [AccountController::class, 'profile'])->name('profile');
     Route::put('/profile/{id}', [AccountController::class, 'updateProfile'])->name('profile.update');
+
+    //Manage Bulletin
+    Route::get('/bulletinboard', [BulletinController::class, 'bulletinboard'])->name('bulletinboard');
+    Route::get('/selectednotices{id}', [BulletinController::class, 'selectednotices'])->name('selectednotices');
 });
 
 // Route for MUIP Admin
@@ -57,18 +62,21 @@ Route::group(['middleware' => 'role:2'], function () {
     Route::post('/add_classroom', [ScheduleController::class, 'createClassroom'])->name('addclassroom.create');
     Route::get('/view_classroom/{id}', [ScheduleController::class, 'viewclassroom'])->name('viewclassroom');
 
+
+    //Manage Bulletin
+    Route::get('/formapproval/{id}', [BulletinController::class, 'formapproval'])->name('formapproval');
+    Route::put('/formapproval/{id}', [BulletinController::class, 'updatestatus'])->name('updatestatus');
+
     //Manage Result
     Route::get('/add_session', [ResultController::class, 'addSession'])->name('addsession');
     Route::post('/add_session', [ResultController::class, 'storeSession'])->name('storeSession');
     Route::delete('/add_session/{id}', [ResultController::class, 'deletesession'])->name('deletesession');
     Route::get('/result_approval_list', [ResultController::class, 'resultapprovallist'])->name('resultapprovallist');
 
-
     Route::get('/studentlistreview/{result_id}', [ResultController::class, 'studentListReview'])->name('studentlistreview');
     // Route to handle result approval/rejection
     Route::post('/updateapproval', [ResultController::class, 'updateApproval'])->name('updateapproval');
     Route::post('/deleteapproval', [ResultController::class, 'deleteapproval'])->name('deleteapproval');
-
 });
 
 // Route for Parent
@@ -98,6 +106,15 @@ Route::group(['middleware' => 'role:4'], function () {
 
 });
 
+Route::group(['middleware' => ['role:1,2,4']], function () {
+    //Manage Bulletin
+    Route::get('/allnotices', [BulletinController::class, 'allnotices'])->name('allnotices');
+    Route::get('/noticeform', [BulletinController::class, 'noticeform'])->name('noticeform');
+    Route::post('/createnotice', [BulletinController::class, 'createnotice'])->name('createnotice');
+    Route::delete('/allnotices/{id}', [BulletinController::class, 'deletenotice'])->name('deletenotice');
+});
+
+
 Route::group(['middleware' => 'role:1,2'], function () {
     // Manage Report
     Route::get('/listFeedback', [ReportController::class, 'listFeedback'])->name('listFeedback');
@@ -112,3 +129,4 @@ Route::group(['middleware' => 'role:1,2'], function () {
     Route::put('/editResult/{assessid}', [ResultController::class, 'editResult'])->name('editResult');
     // Route::post('/updateResult/{assessid}/{studentid}', [ResultController::class, 'updateResult'])->name('updateResult');
 });
+
