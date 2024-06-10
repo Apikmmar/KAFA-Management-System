@@ -33,7 +33,7 @@
                         <th scope="row">{{ $num }}</th>
                         <td>{{ $child->student_name }}</td>
                         <td>{{ $child->student_ic }}</td>
-                        <td>{{ optional($child->student)->class_name ?? 'No Class Yet' }}</td>
+                        <td class="text-capitalize">{{ optional($child->classroom)->class_name ?? 'No Class Yet' }}</td>
                         <td>
                         @if (is_null($child->classroom_id))
                             <i>Not Available</i>

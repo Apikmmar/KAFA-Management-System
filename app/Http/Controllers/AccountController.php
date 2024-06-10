@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AddTeacherRequest;
 use App\Http\Requests\RegisterChildRequest;
 use App\Http\Requests\UpdateProfileRequest;
+use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -102,7 +103,7 @@ class AccountController extends Controller
     // createchild post method
     public function createchild(RegisterChildRequest $request) {
         $parent = Auth::user(); // fetch user authentication
-
+        
         $data = $request->validated(); // validate input request
 
         // create child

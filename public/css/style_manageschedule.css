@@ -13,3 +13,8 @@
 #timetable th {
     background-color: #f8f9fa;
 }
+
+#linksetup {
+    color: black;
+    text-decoration: none;
+}
