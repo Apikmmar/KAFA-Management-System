@@ -3,6 +3,8 @@
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\BulletinController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\ResultController;
+use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -20,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 
 // Route for all user
@@ -37,7 +39,16 @@ Route::middleware(['auth'])->group(function () {
 
 // Route for MUIP Admin
 Route::group(['middleware' => 'role:1'], function () {
-});
+    // ManageReport
+    Route::get('/listSubject', [ReportController::class, 'listSubject'])->name('listSubject');
+    Route::get('/searchExam/{id}', [ReportController::class, 'searchExam'])->name('searchExam');
+    Route::get('/gradeReport', [ReportController::class, 'gradeReport'])->name('gradeReport');
+    Route::get('/infoReport', [ReportController::class, 'infoReport'])->name('infoReport');
+    Route::get('/classReport', [ReportController::class, 'classReport'])->name('classReport');
+    Route::get('/addFeedback', [ReportController::class, 'addFeedback'])->name('addFeedback');
+    Route::post('/addFeedback', [ReportController::class, 'saveFeedback'])->name('saveFeedback');
+    Route::delete('/deleteFeedback/{id}', [ReportController::class, 'deleteFeedback'])->name('deleteFeedback');
+    });
 
 // Route for KAFA-Admin
 Route::group(['middleware' => 'role:2'], function () {
@@ -51,9 +62,21 @@ Route::group(['middleware' => 'role:2'], function () {
     Route::post('/add_classroom', [ScheduleController::class, 'createClassroom'])->name('addclassroom.create');
     Route::get('/view_classroom/{id}', [ScheduleController::class, 'viewclassroom'])->name('viewclassroom');
 
+
     //Manage Bulletin
     Route::get('/formapproval/{id}', [BulletinController::class, 'formapproval'])->name('formapproval');
     Route::put('/formapproval/{id}', [BulletinController::class, 'updatestatus'])->name('updatestatus');
+
+    //Manage Result
+    Route::get('/add_session', [ResultController::class, 'addSession'])->name('addsession');
+    Route::post('/add_session', [ResultController::class, 'storeSession'])->name('storeSession');
+    Route::delete('/add_session/{id}', [ResultController::class, 'deletesession'])->name('deletesession');
+    Route::get('/result_approval_list', [ResultController::class, 'resultapprovallist'])->name('resultapprovallist');
+
+    Route::get('/studentlistreview/{result_id}', [ResultController::class, 'studentListReview'])->name('studentlistreview');
+    // Route to handle result approval/rejection
+    Route::post('/updateapproval', [ResultController::class, 'updateApproval'])->name('updateapproval');
+    Route::post('/deleteapproval', [ResultController::class, 'deleteapproval'])->name('deleteapproval');
 });
 
 // Route for Parent
@@ -65,6 +88,10 @@ Route::group(['middleware' => 'role:3'], function () {
     // Manage Schedule
     Route::get('/child_kafa', [ScheduleController::class, 'childkafa'])->name('childkafa');
     Route::get('/kafa_schedule/{id}', [ScheduleController::class, 'kafaschedule'])->name('kafaschedule');
+
+    //Manage Result
+    Route::get('/select_result_info', [ResultController::class, 'selectresultinfo'])->name('selectresultinfo');
+    Route::get('/resultslip', [ResultController::class, 'resultslip'])->name('resultslip');
 });
 
 // Route for Teacher
@@ -76,6 +103,7 @@ Route::group(['middleware' => 'role:4'], function () {
     Route::get('/activity_details/{id}', [ScheduleController::class, 'activitydetails'])->name('activitydetails');
     Route::put('/activity_details/{id}', [ScheduleController::class, 'UpdateClassactivity'])->name('activitydetails.update');
     Route::delete('/activity_details/{id}', [ScheduleController::class, 'deleteClassActivity'])->name('activitydetails.delete');
+
 });
 
 Route::group(['middleware' => ['role:1,2,4']], function () {
@@ -85,3 +113,20 @@ Route::group(['middleware' => ['role:1,2,4']], function () {
     Route::post('/createnotice', [BulletinController::class, 'createnotice'])->name('createnotice');
     Route::delete('/allnotices/{id}', [BulletinController::class, 'deletenotice'])->name('deletenotice');
 });
+
+
+Route::group(['middleware' => 'role:1,2'], function () {
+    // Manage Report
+    Route::get('/listFeedback', [ReportController::class, 'listFeedback'])->name('listFeedback');
+
+    //Manage Result
+    Route::get('/assessment_details', [ResultController::class, 'assessmentdetails'])->name('assessmentdetails');
+    Route::get('/add_result/{assessid}', [ResultController::class, 'displayResult'])->name('displayResult');
+    Route::post('/add_result/{assessid}', [ResultController::class, 'addResult'])->name('addResult');
+    // Route::post('/updateResult/{assessid}/{studentid}', [ResultController::class, 'updateResult'])->name('updateResult');
+
+    Route::get('/editResult/{assessid}', [ResultController::class, 'updateResult'])->name('updateResult');
+    Route::put('/editResult/{assessid}', [ResultController::class, 'editResult'])->name('editResult');
+    // Route::post('/updateResult/{assessid}/{studentid}', [ResultController::class, 'updateResult'])->name('updateResult');
+});
+
