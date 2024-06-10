@@ -16,8 +16,8 @@ use App\Http\Requests\CreateFeedbackRequest;
 class ReportController extends Controller
 {
     //display list subject (MUIP)
-    public function listSubject() {
-        $subjects = Subject::all();
+    public function listSubject() {             
+        $subjects = Subject::all();             //fetch all subject
 
         return view('ManageReport.MUIP-Admin.listSubject', compact('subjects'));
     }
@@ -26,7 +26,7 @@ class ReportController extends Controller
     public function searchExam($id) {
         $examinations = Examination::All();     //fetch all examination
         $classes = Classroom::All();            //fetch all classroom
-        $subject = Subject::findOrFail($id);
+        $subject = Subject::findOrFail($id);    //fetch subject based on the id
 
         return view('ManageReport.MUIP-Admin.searchExam', compact('examinations', 'classes', 'subject'));
     }
@@ -92,7 +92,7 @@ class ReportController extends Controller
         $examination = Examination::where('id', $request->exam_id)->first();
     
         // Fetch the class record based on the class ID
-        $class = Classroom::findOrFail($request->class);
+        $class = Classroom::findOrFail($request->class);  
     
         // Fetch the students based on the classroom ID
         $students = Student::where('classroom_id', $class->id)->get();
@@ -157,7 +157,7 @@ class ReportController extends Controller
     //list feedback table (MUIP and KAFA)
     public function listFeedback() {
         // Retrieve all feedback records from the database
-        $feedbacks = Feedback::all();    //fetch  all feedback
+        $feedbacks = Feedback::all();    
     
         // Return the view with feedback data
         return view('ManageReport.listFeedback', compact('feedbacks'));
