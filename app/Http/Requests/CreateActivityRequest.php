@@ -36,7 +36,7 @@ class CreateActivityRequest extends FormRequest
                 function ($attribute, $value, $fail) {
                     $startTime = \Carbon\Carbon::parse($this->input('activity_starttime'));
                     $endTime = \Carbon\Carbon::parse($value);
-                    if ($endTime->diffInMinutes($endTime) > 60) {
+                    if ($endTime->diffInMinutes($startTime) > 60) {
                         $fail('The end time must not exceed 1 hour after the start time.');
                     }
                 }

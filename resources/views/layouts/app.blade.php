@@ -8,6 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link rel="stylesheet" href="{{ asset('css/default_style.css') }}">
+    <link rel="shortcut icon" href="{{ asset('default_image/kafa-logo.png') }}" type="image/png">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 

@@ -34,7 +34,11 @@
                                 {{ $activity->subject->subject_name }}
                                 <br>
                                 <small>
+                                @if (auth()->user()->role_id == 4)
+                                    <a href="{{ route('activitydetails', ['id' => $activity->id]) }}" id="linksetup">{{ $activity->activity_name }}</a>
+                                @else
                                     {{ $activity->activity_name }}
+                                @endif
                                 </small>
                             @endif
                         @endforeach
