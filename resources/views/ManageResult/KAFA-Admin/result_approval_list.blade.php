@@ -82,7 +82,6 @@
                                         </td>
                                         <td>
                                             <a href="{{ route('studentlistreview', ['result_id' => $result->id]) }}" class="btn btn-outline-primary btn-sm">View</a>
-                                            <a href="#" class="btn btn-outline-danger btn-sm">Delete</a>
                                         </td>
                                     </tr>
                                 @endforeach
