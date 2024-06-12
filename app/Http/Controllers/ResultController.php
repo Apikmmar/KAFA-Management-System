@@ -10,7 +10,6 @@ use App\Models\Examination;
 use App\Models\Result;
 use App\Models\Student;
 use App\Models\Subject;
-use Database\Seeders\StudentSeeder;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 
 class ResultController extends Controller
 {
+    // Display the assessment list for teachers
     public function assessmentdetails()
     {
         // Get the current year as a string
@@ -29,6 +29,7 @@ class ResultController extends Controller
         return view('ManageResult.Teacher.assessment_details', compact('assessments'));
     }
 
+    // Display the student list in the Add Result page based on the selected subject for teachers
     public function displayResult(Request $request, $assessid)
     {
         $assessment = Examination::findOrFail($assessid);
@@ -36,10 +37,10 @@ class ResultController extends Controller
         $subject = $request->subject_name;
         $students = collect(); // Define an empty collection by default
 
+        // Check if the subject is one of the specified subjects
         if (
-            $subject === 'Bidang Al Quran' || $subject === 'Ulum Syariah' || $subject === 'Sirah' ||
-            $subject === 'Adab' || $subject === 'Jawi Dan Khat' || $subject === 'Lughatul Quran' ||
-            $subject === 'Penghayatan Cara Hidup Islam' || $subject === 'Amali Solat'
+            in_array($subject, ['Bidang Al Quran', 'Ulum Syariah', 'Sirah', 'Adab', 'Jawi Dan Khat', 
+                                'Lughatul Quran', 'Penghayatan Cara Hidup Islam', 'Amali Solat'])
         ) {
             $id = Auth::id();
             $class = Classroom::where('teacher_id', $id)->first();
@@ -52,10 +53,10 @@ class ResultController extends Controller
             }
         }
 
-        return view('ManageResult.Teacher.add_result', compact('assessment', 'subjects', 'students', ));
+        return view('ManageResult.Teacher.add_result', compact('assessment', 'subjects', 'students'));
     }
 
-
+    // Store the added results into the database
     public function addResult(CreateResultRequest $request)
     {
         $userid = Auth::id();
@@ -65,7 +66,7 @@ class ResultController extends Controller
 
         $results = [];
         foreach ($request->student_ids as $student_id) {
-
+            // Determine the grade based on the result marks
             if ($request->result_marks[$student_id] >= 0 && $request->result_marks[$student_id] < 40) {
                 $gradestd = 'E';
             } elseif ($request->result_marks[$student_id] >= 40 && $request->result_marks[$student_id] <= 50) {
@@ -78,6 +79,7 @@ class ResultController extends Controller
                 $gradestd = 'A';
             }
 
+            // Create an array of results to be inserted
             $results[] = [
                 'student_id' => $student_id,
                 'subject_id' => $request->subs,
@@ -90,14 +92,15 @@ class ResultController extends Controller
             ];
         }
 
+        // Insert all records within a transaction
         DB::transaction(function () use ($results) {
-            Result::insert($results); // Insert all records within a transaction
+            Result::insert($results);
         });
 
         return redirect()->route('displayResult', ['assessid' => $request->assessid])->with('message', 'Results added successfully!');
     }
 
-
+    // Display the student list for the edit page based on the selected subject for teachers
     public function updateResult(Request $request, $assessid)
     {
         $assessment = Examination::findOrFail($assessid);
@@ -105,10 +108,10 @@ class ResultController extends Controller
         $subject = $request->subject_name;
         $students = collect(); // Define an empty collection by default
 
+        // Check if the subject is one of the specified subjects
         if (
-            $subject === 'Bidang Al Quran' || $subject === 'Ulum Syariah' || $subject === 'Sirah' ||
-            $subject === 'Adab' || $subject === 'Jawi Dan Khat' || $subject === 'Lughatul Quran' ||
-            $subject === 'Penghayatan Cara Hidup Islam' || $subject === 'Amali Solat'
+            in_array($subject, ['Bidang Al Quran', 'Ulum Syariah', 'Sirah', 'Adab', 'Jawi Dan Khat', 
+                                'Lughatul Quran', 'Penghayatan Cara Hidup Islam', 'Amali Solat'])
         ) {
             $id = Auth::id();
             $class = Classroom::where('teacher_id', $id)->first();
@@ -117,15 +120,17 @@ class ResultController extends Controller
                 $subsid = Subject::where('subject_name', $subject)->first();
                 $students = Student::where('classroom_id', $class->id)->get();
 
+                // Get the results for the assessment and subject
                 $results = Result::where('examination_id', $assessment->id)->where('subject_id', $subsid->id)->get();
 
                 return view('ManageResult.Teacher.edit_result', compact('assessment', 'subjects', 'students', 'subsid', 'results'));
             }
         }
 
-        return view('ManageResult.Teacher.edit_result', compact('assessment', 'subjects', 'students', ));
+        return view('ManageResult.Teacher.edit_result', compact('assessment', 'subjects', 'students'));
     }
 
+    // Store the updated results into the database
     public function editResult(UpdateResultRequest $request)
     {
         $data = $request->validated();
@@ -142,7 +147,7 @@ class ResultController extends Controller
             }
 
             $marks = $request->result_marks[$student_id];
-            $gradestd = 'N';
+            $gradestd = 'N'; // Update the result grades based on result marks
 
             if ($marks >= 0 && $marks < 40) {
                 $gradestd = 'E';
@@ -156,6 +161,7 @@ class ResultController extends Controller
                 $gradestd = 'A';
             }
 
+            // Update the existing result with the new data
             $existingResult->result_marks = $marks;
             $existingResult->result_feedback = $request->result_feedback[$student_id];
             $existingResult->result_grades = $gradestd;
@@ -164,6 +170,7 @@ class ResultController extends Controller
             $resultsToUpdate[] = $existingResult;
         }
 
+        // Save all updated results within a transaction
         DB::transaction(function () use ($resultsToUpdate) {
             foreach ($resultsToUpdate as $result) {
                 $result->save();
@@ -173,8 +180,7 @@ class ResultController extends Controller
         return redirect()->route('assessmentdetails')->with('message', 'Results updated successfully!');
     }
 
-
-    // display add session page and store data
+    // Display the Add Session page and store data
     public function addSession()
     {
         $examination = Examination::all();
@@ -182,12 +188,12 @@ class ResultController extends Controller
         return view('ManageResult.KAFA-Admin.add_session', compact('examination'));
     }
 
+    // Store the session into the database
     public function storeSession(CreateSessionRequest $request)
     {
         $data = $request->validated();
 
         $examination = Examination::create([
-
             'school_session' => $data['school_session'],
             'exam_type' => $data['exam_type'],
             'approval_status' => 'Pending',
@@ -199,14 +205,16 @@ class ResultController extends Controller
         return redirect()->route('addsession')->with('success', 'Session created successfully!');
     }
 
+    // Delete the existing session
     public function deletesession($id)
     {
-        $examination = Examination::findOrFail($id); //fetch all exam based on id
-        $examination->delete(); // delete session from database
+        $examination = Examination::findOrFail($id); // Fetch the examination by id
+        $examination->delete(); // Delete the session from the database
 
         return redirect()->route('addsession')->with('success', 'Session deleted successfully!');
     }
 
+    // Display student names based on parents' information
     public function selectresultinfo()
     {
         $parent = Auth::user();
@@ -216,6 +224,7 @@ class ResultController extends Controller
         return view('ManageResult.Parent.select_result_info', compact('children', 'registeredYears'));
     }
 
+    // Display the result slip for a student based on the selected session year and exam type
     public function resultslip(Request $request)
     {
         // Find the student
@@ -239,50 +248,51 @@ class ResultController extends Controller
         }
     }
 
+    // Display the result approval list for KAFA Admin
     public function resultApprovalList(Request $request)
     {
         $query = Result::with('examination', 'studentresult.classroom', 'subject');
-    
+
         if ($request->has('school_session') && $request->school_session != '') {
             $query->whereHas('examination', function ($q) use ($request) {
                 $q->where('school_session', $request->school_session);
             });
         }
-    
+
         if ($request->has('exam_type') && $request->exam_type != '') {
             $query->whereHas('examination', function ($q) use ($request) {
                 $q->where('exam_type', $request->exam_type);
             });
         }
-    
+
         $results = $query->get();
-    
+
         return view('ManageResult.KAFA-Admin.result_approval_list', compact('results'));
     }
 
-    
+    // Display student list for review based on result id for KAFA Admin
     public function studentListReview($result_id)
     {
         $result = Result::where('id', $result_id)->first();
-    
+
         if (!$result) {
             return redirect()->route('result_approval_list')->with('error', 'Result not found');
         }
-    
+
         return view('ManageResult.KAFA-Admin.student_list_review', compact('result'));
     }
-    
+
+    // Update the approval status of a result to 'Approved'
     public function updateApproval(Request $request)
     {
-
-    
         $result = Result::findOrFail($request->result_id);
         $result->result_status = 'Approved';
         $result->save();
-    
+
         return redirect()->route('studentlistreview', ['result_id' => $request->result_id])->with('message', 'Result status updated successfully');
     }
 
+    // Update the approval status of a result to 'Rejected'
     public function deleteapproval(Request $request)
     {
         $result = Result::findOrFail($request->result_id);
