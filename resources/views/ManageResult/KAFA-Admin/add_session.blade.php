@@ -86,6 +86,7 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <!-- Loop through each examination to display its details -->
                             @foreach ($examination as $exam)
                                 <tr>
                                     <td>{{ $exam->school_session }}</td>
